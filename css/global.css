@@ -1,0 +1,19 @@
+:root {
+    --red: #620d0d;
+}
+
+.navbar .active,
+.quote-area
+{
+    background-color: var(--red);
+}
+
+.border-red
+{
+    border-color: var(--red)!important;
+}
+
+.bg-black
+{
+    background-color: #000 !important;
+}
