@@ -19,27 +19,7 @@
         <title>Cody Fulford - Work Experience</title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-md navbar-dark bg-black mb-3">
-            <a class="navbar-brand" href="#">Cody Fulford</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a class="nav-link text-white" href="index.html">Home</a></li>
-                    <li class="nav-item active rounded"><a class="nav-link text-white" href="career.html">Career</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="volunteering.html">Volunteering</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="development.html">Development</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="doodles.html">Doodles</a></li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link text-white" href="https://www.linkedin.com/in/codyfulford/"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="https://github.com/CJFulford"><i class="fab fa-github"></i> Github</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="https://www.youtube.com/channel/UCNFsx1Nd9wa-0s_ny_ry_Hg"><i class="fab fa-youtube"></i> YouTube</a></li>
-                </ul>
-            </div>
-        </nav>
-
+        <?php include "navbar.php"; ?>
 
         <div class="container">
 
@@ -122,6 +102,7 @@
                     <p class="text-justify">My first job was in the retail department at Heritage Park Historical Village in Calgary, Alberta, Canada at the age of 14. My brother started his career here two years prior and I was eager to follow his success. I quickly learned the ropes of a working environment and was quite happy working here throughout the standard summer operating months and fall/winter holidays. I soon learned the pressure that comes with working in a retail position and with it came an appreciation for those that work in these positions full-time. The roles that I was assigned to were largely unsupervised, working individually or in small teams.</p>
                     <ul>
                         <li>Quick mental calculations</li>
+                        
                         <li>Individual and small team retail</li>
                         <li>Little supervision</li>
                     </ul>
@@ -132,5 +113,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+        <script>$(document).ready(function () { $('#navbar-career').addClass('active rounded'); });</script>
     </body>
 </html>
