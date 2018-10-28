@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <form action="includes/api.php" method="post">
+                    <form action="includes/api.php" method="post" class="clearfix">
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input id="email" name="email" class="form-control w-100" type="email" />

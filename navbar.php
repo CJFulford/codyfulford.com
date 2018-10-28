@@ -16,7 +16,7 @@
             </li>
             <li class="nav-item" id="navbar-career">
                 <a class="nav-link text-white" href="career.php">
-                    <i class="far fa-address-card"></i>
+                    <i class="fas fa-building"></i>
                     Career
                 </a>
             </li>
@@ -48,6 +48,14 @@
             <?php endif; ?>
         </ul>
         <ul class="navbar-nav ml-auto">
+            <?php if ($controller->isUserLoggedIn()) : ?>
+                <li class="nav-item" id="navbar-user-settings">
+                    <a class="nav-link text-white" href="user-settings.php">
+                        <i class="fas fa-user"></i>
+                        User Settings
+                    </a>
+                </li>
+            <?php endif; ?>
             <li class="nav-item">
                 <a class="nav-link text-white" href="https://www.linkedin.com/in/codyfulford/">
                     <i class="fab fa-linkedin"></i>

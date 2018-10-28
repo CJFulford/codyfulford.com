@@ -3,10 +3,10 @@
 
 
     $loginNotRequired = [
-        "logIn"
+        "login"
     ];
-    // if (!in_array($_REQUEST['function'], $loginNotRequired) && !$controller->isUserLoggedIn())
-    //     unset($_REQUEST['function']);
+    if (!in_array($_REQUEST['function'], $loginNotRequired) && !$controller->isUserLoggedIn())
+        unset($_REQUEST['function']);
 
     $message = '';
     if (isset($_REQUEST['function']))
@@ -14,24 +14,28 @@
         switch($_REQUEST['function'])
         {
             case ('login'):
-                $success = $controller->login($_POST['email'], $_POST['password']);
-                if ($success === true)
+                if ($controller->login($_POST['email'], $_POST['password']) === true)
                 {
-                    header('Location: ../exercise.php');
+                    header('Location: ../user-settings.php');
                     return;
                 }
                 else
                     $message = 'Error logging in: '.$success;
                 break;
             case ('logout'):
-                $success = $controller->logout();
-                if ($success === true)
+                if ($controller->logout() === true)
                 {
                     header("Location: ../index.php");
                     return;
                 }
                 else
                     $message = 'Error logging out. Please contact system administrator.';
+                break;
+            case ('saveUserDetails'):
+                $message = !$controller->saveUserDetails($_POST['first-name'], $_POST['last-name'], $_POST['email']) ? 'Save Failed' : '';
+                break;
+            case ('changeUserPassword'):
+                $message = !$controller->changeUserPassword($_POST['password-0'], $_POST['password-1'], $_POST['password-2']) ? 'Save Failed' : '';
                 break;
             default:
                 break;
