@@ -15,6 +15,7 @@
             <li class="nav-item"><a class="nav-link text-white" href="https://www.linkedin.com/in/codyfulford/"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
             <li class="nav-item"><a class="nav-link text-white" href="https://github.com/CJFulford"><i class="fab fa-github"></i> Github</a></li>
             <li class="nav-item"><a class="nav-link text-white" href="https://www.youtube.com/channel/UCNFsx1Nd9wa-0s_ny_ry_Hg"><i class="fab fa-youtube"></i> YouTube</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="login.php"><i class="fas fa-sign-in-alt"></i> Login</a></li>
         </ul>
     </div>
 </nav>
