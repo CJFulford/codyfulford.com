@@ -17,3 +17,13 @@
 {
     background-color: #000 !important;
 }
+
+label
+{
+    padding-left: 1rem;
+}
+
+.form-control
+{
+    border-color: #000;
+}
