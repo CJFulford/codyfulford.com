@@ -3,9 +3,12 @@
 }
 
 .navbar .active,
-.quote-area
+.quote-area,
+.nav-link.active,
+.bg-cody-red
 {
-    background-color: var(--red);
+    background-color: var(--red)!important;
+    color: #fff!important;
 }
 
 .border-red

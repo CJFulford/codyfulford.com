@@ -68,4 +68,14 @@ class controller
     {
         return $this->userModel->changeUserPassword($password0, $password1, $password2);
     }
+
+    public function getMuscles() : array
+    {
+        return $this->exerciseModel->getMuscles();
+    }
+
+    public function saveMuscle(string $muscleName, int $muscleId = null) : bool
+    {
+        return $this->exerciseModel->saveMuscle($muscleName, $muscleId);
+    }
 }

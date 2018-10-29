@@ -17,13 +17,12 @@
 
         <div class="container">
             <div class="row">
-                <div class="col">
-                    <h2><?=$userDetails['first_name']?> <?=$userDetails['last_name'];?></h2>
+                <div class="col-12">
+                    <h2>
+                        <?=$userDetails['first_name']?> <?=$userDetails['last_name'];?>
+                    </h2>
                 </div>
-            </div>
-            <hr />
-            <div class="row">
-                <div class="col">
+                <div class="col-12">
                     <div class="card-columns">
                         <div class="card border-dark">
                             <div class="card-header">
