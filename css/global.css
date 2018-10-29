@@ -2,6 +2,11 @@
     --red: #620d0d;
 }
 
+body
+{
+    padding-bottom: 50px;
+}
+
 .navbar .active,
 .quote-area,
 .nav-link.active,

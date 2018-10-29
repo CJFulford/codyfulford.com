@@ -43,6 +43,11 @@
                 $message = !$controller->saveMuscle($_POST['muscle-name'], $muscleId) ? 'Save Failed' : '';
                 $gets[] = 'exercise-tabs=muscles-tab';
                 break;
+            case ('saveExercise'):
+                $exerciseId = is_numeric($_POST['exercise-id']) ? $_POST['exercise-id'] : null;
+                $message = !$controller->saveExercise($_POST['exercise-name'], $_POST['exercise-description'], json_decode($_POST['related-muscles'], true), $exerciseId) ? 'Save Failed' : '';
+                $gets[] = 'exercise-tabs=exercise-tab';
+                break;
             default:
                 break;
         }

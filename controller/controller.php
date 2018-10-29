@@ -78,4 +78,19 @@ class controller
     {
         return $this->exerciseModel->saveMuscle($muscleName, $muscleId);
     }
+
+    public function getExerciseDetails(int $exerciseId) :array
+    {
+        return $this->exerciseModel->getExerciseDetails($exerciseId);
+    }
+
+    public function getExercises() : array
+    {
+        return $this->exerciseModel->getExercises();
+    }
+
+    public function saveExercise(string $exerciseName, string $exerciseDescription, array $relatedMuscles, int $exerciseId = null) : bool
+    {
+        return $this->exerciseModel->saveExercise($exerciseName, $exerciseDescription, $relatedMuscles, $exerciseId);
+    }
 }
