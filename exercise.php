@@ -66,7 +66,7 @@
                     <div class="tab-content" id="myTabContent">
                         <!--Workouts-->
                         <div class="tab-pane fade <?=($exersizeTab === 0 ? 'show active' : '');?>" id="workouts" role="tabpanel" aria-labelledby="workouts-tab">
-                            <div class="card">
+                            <div class="card border-dark">
                                 <div class="card-header">Create Workout</div>
                                 <div class="card-body">
                                     <form method="post" id="workout-form" action="includes/api.php" onsubmit="return gatherWorkoutSets();">
@@ -81,7 +81,7 @@
                                             <input class="form-control" id="workout-name" name="workout-name" type="text" />
                                         </div>
                                         <div id="workout-sets" class="card-columns">
-                                            <div class="card">
+                                            <div class="card border-dark">
                                                 <div class="card-body">
                                                     <div class="form-group form-check">
                                                         <input type="checkbox" class="form-check-input" id="superset">
@@ -126,7 +126,7 @@
                             <div class="card-columns">
                             <?php $workoutCounter = count($workouts); ?>
                             <?php foreach($workouts as $workoutId => $workout): ?>
-                                <div class="card my-2">
+                                <div class="card border-dark my-2">
                                     <div class="card-header">
                                         <div class="row">
                                             <div class="col">
@@ -173,7 +173,7 @@
                         </div>
                         <!--Exercises-->
                         <div class="tab-pane fade <?=($exersizeTab === 1 ? 'show active' : '');?>" id="exercises" role="tabpanel" aria-labelledby="exercises-tab">
-                            <div class="card">
+                            <div class="card border-dark">
                                 <div class="card-header">Create Muscle</div>
                                 <div class="card-body">
                                     <form method="post" action="includes/api.php" onsubmit="return gatherExerciseMuscles();">
@@ -251,7 +251,7 @@
                         </div>
                         <!--Muscles-->
                         <div class="tab-pane fade <?=($exersizeTab === 2 ? 'show active' : '');?>" id="muscles" role="tabpanel" aria-labelledby="muscles-tab">
-                            <div class="card">
+                            <div class="card border-dark">
                                 <div class="card-header">Create Muscle</div>
                                 <div class="card-body">
                                     <form method="post" action="includes/api.php">
