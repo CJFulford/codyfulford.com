@@ -122,4 +122,19 @@ class controller
     {
         return $this->exerciseModel->getWorkouts();
     }
+
+    public function getMeasurements() : array
+    {
+        return $this->exerciseModel->getMeasurements();
+    }
+
+    public function saveMeasurement(int $measurementId, float $measurementValue) : bool
+    {
+        return $this->exerciseModel->saveMeasurement($measurementId, $measurementValue);
+    }
+
+    public function getUserMeasurements(int $userId) : array
+    {
+        return $this->exerciseModel->getUserMeasurements($userId);
+    }
 }

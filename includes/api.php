@@ -52,6 +52,10 @@
                 $messsage = !$controller->saveWorkout($_POST['workout-name'], json_decode($_POST['sets'], true), intval($_SESSION['user_id']) === 1 && isset($_POST['all-user-workout'])) ? 'Save Failed' : '';
                 $gets[] = 'exercise-tabs=workouts-tab';
                 break;
+            case ('saveMeasurement'):
+                $message = !$controller->saveMeasurement($_POST['measurement-id'], $_POST['measurement-value']) ? 'Save Failed' : '';
+                $gets[] = 'exercise-tabs=measurements-tab';
+                break;
             default:
                 break;
         }

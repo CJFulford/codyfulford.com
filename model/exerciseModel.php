@@ -249,7 +249,7 @@ class exerciseModel
         $workouts = [];
         $query = $this->mysqli->prepare(
             'SELECT
-                w.id, w.user_id, w.workout_name,
+                w.id, w.user_id, w.workout_name, w.created,
                 s.id, s.is_superset,
                 mse.exercise_id
             FROM
@@ -277,12 +277,13 @@ class exerciseModel
                 print_r($query);
             else
             {
-                $query->bind_result($workoutId, $workoutUser, $workoutName, $setId, $isSuperSet, $exerciseId);
+                $query->bind_result($workoutId, $workoutUser, $workoutName, $created, $setId, $isSuperSet, $exerciseId);
                 $query->store_result();
                 while($query->fetch())
                 {
                     $workouts[$workoutId]['name'] = $workoutName;
                     $workouts[$workoutId]['is_default_workout'] = is_null($workoutUser);
+                    $workouts[$workoutId]['created'] = $created;
                     $workouts[$workoutId]['sets'][$setId]['is_superset'] = boolval($isSuperSet);
                     $workouts[$workoutId]['sets'][$setId]['exercise_id_numbers'][] = $exerciseId;
                 }
@@ -298,5 +299,51 @@ class exerciseModel
             echo $this->mysqli->error;
 
         return $workouts;
+    }
+
+    public function getMeasurements() : array
+    {
+        $measurements = [];
+        $query = $this->mysqli->prepare('SELECT * FROM exercise__measurements');
+        if ($query)
+        {
+            $query->execute();
+            $results = $query->get_result();
+            while($row = $results->fetch_assoc())
+                $measurements[$row['id']] = $row;
+            $query->close();
+        }
+        return $measurements;
+    }
+
+    public function saveMeasurement(int $measurementId, float $measurementValue) : bool
+    {
+        $success = false;
+        $query = $this->mysqli->prepare('INSERT INTO exercise__match_user_measurement (user_id, measurement_id, measurement_value) VALUES (?,?,?)');
+        if ($query)
+        {
+            $query->bind_param('iid', $_SESSION['user_id'], $measurementId, $measurementValue);
+            $query->execute();
+            if (!$query->error)
+                $success = true;
+            $query->close();
+        }
+        else
+            echo $this->mysqli->error;
+        return $success;
+    }
+
+    public function getUserMeasurements(int $userId) : array
+    {
+        $measuremeents = [];
+        $query = $this->mysqli->prepare('SELECT * FROM exercise__match_user_measurement WHERE user_id = ? ORDER BY id DESC');
+        if ($query)
+        {
+            $query->bind_param('i', $userId);
+            $query->execute();
+            $measuerments = $query->get_result()->fetch_all(MYSQLI_ASSOC);
+            $query->close();
+        }
+        return $measuerments;
     }
 }

@@ -8,6 +8,7 @@
     $workouts = $controller->getWorkouts();
     $exercises = $controller->getExercises();
     $muscles = $controller->getMuscles();
+    $measurements = $controller->getMeasurements();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +44,9 @@
                                     case ('muscles-tab'):
                                         $exersizeTab = 2;
                                         break;
+                                    case ('measurements-tab'):
+                                        $exersizeTab = 3;
+                                        break;
                                 }
                                 ?>
                                 <li class="nav-item">
@@ -58,6 +62,11 @@
                                 <li class="nav-item">
                                     <a class="nav-link <?=($exersizeTab === 2 ? 'active' : '');?>" id="muscles-tab" data-toggle="tab" href="#muscles" role="tab" aria-controls="muscles" aria-selected="false">
                                         Muscles
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link <?=($exersizeTab === 3 ? 'active' : '');?>" id="measurements-tab" data-toggle="tab" href="#measurements" role="tab" aria-controls="measurements" aria-selected="false">
+                                        Measurements
                                     </a>
                                 </li>
                             </ul>
@@ -78,14 +87,14 @@
                                         <?php endif; ?>
                                         <div class="form-group">
                                             <label for="exercise-name">Workout Name</label>
-                                            <input class="form-control" id="workout-name" name="workout-name" type="text" />
+                                            <input class="form-control" id="workout-name" name="workout-name" type="text" required/>
                                         </div>
                                         <div id="workout-sets" class="card-columns">
                                             <div class="card border-dark">
                                                 <div class="card-body">
                                                     <div class="form-group form-check">
-                                                        <input type="checkbox" class="form-check-input" id="superset">
-                                                        <label class="form-check-label">SuperSet</label>
+                                                        <input type="checkbox" class="form-check-input" id="superset-0">
+                                                        <label class="form-check-label" for="superset-0">SuperSet</label>
                                                     </div>
                                                     <small>
                                                         <a href="#" onclick="removeSetFromWorkout(this);">
@@ -127,42 +136,37 @@
                             <?php $workoutCounter = count($workouts); ?>
                             <?php foreach($workouts as $workoutId => $workout): ?>
                                 <div class="card border-dark my-2">
-                                    <div class="card-header">
+                                    <div class="card-header py-1">
                                         <div class="row">
                                             <div class="col">
                                                 <?=$workoutCounter;?> - <?=$workout['name'];?>
                                             </div>
-                                            <?php if ($workout['is_default_workout']): ?>
-                                                <div class="col-auto">
-                                                    <sup>
-                                                        * Default
-                                                    </sup>
-                                                </div>
-                                            <?php endif; ?>
+                                            <div class="col-auto">
+                                                <small>
+                                                    <?=date('d/m/Y', strtotime($workout['created']))?>
+                                                </small>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body py-1">
                                         <div class="row">
-                                            <?php $setCounter = count($workout['sets']); ?>
+                                            <?php $setIndex = 0; ?>
                                             <?php foreach ($workout['sets'] as $setId => $set): ?>
-                                                <div class="col-12 <?=($setCounter != count($workout['sets']) ? 'border-top border-dark' : '');?>">
-                                                    <div class="modal-title">
-                                                        <?=$setCounter;?>
-                                                        <?=($set['is_superset'] ? '<small> - Superset</small>' : '');?>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                            </div>
+                                                <div class="col-12 py-1 my-0 <?=($setIndex > 0 ? 'border-top border-dark' : '');?>">
+                                                    <?php if ($set['is_superset']): ?>
+                                                        <div class="text-center">
+                                                            <small>
+                                                                Superset
+                                                            </small>
                                                         </div>
-                                                    </div>
-                                                    <ol>
-                                                        <?php foreach ($set['exercise_id_numbers'] as $exerciseId): ?>
-                                                            <li class="text-truncate">
-                                                                <?=$exercises[$exerciseId]['name'];?>
-                                                            </li>
-                                                        <?php endforeach; ?>
-                                                    </ol>
+                                                    <?php endif; ?>
+                                                    <?php foreach ($set['exercise_id_numbers'] as $exerciseId): ?>
+                                                        <p class="text-truncate mb-0">
+                                                            <?=$exercises[$exerciseId]['name'];?>
+                                                        </p>
+                                                    <?php endforeach; ?>
                                                 </div>
-                                                <?php $setCounter--; ?>
+                                                <?php $setIndex++; ?>
                                             <?php endforeach; ?>
                                         </div>
                                     </div>
@@ -304,6 +308,56 @@
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Measurements-->
+                        <div class="tab-pane fade <?=($exersizeTab === 3 ? 'show active' : '');?>" id="measurements" role="tabpanel" aria-labelledby="measurements-tab">
+                            <div class="card border-dark">
+                                <div class="card-header">Measure</div>
+                                <div class="card-body">
+                                    <form method="post" action="includes/api.php">
+                                        <input type="hidden" name="function" value="saveMeasurement"/>
+                                        <div class="row">
+                                            <div class="col-12 col-md form-group">
+                                                <label for="measurement-id">Type</label>
+                                                <select class="form-control" name="measurement-id">
+                                                    <?php foreach ($measurements as $measurementId => $measurement): ?>
+                                                        <option value="<?=$measurementId;?>"><?=$measurement['measurement_name'];?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-md form-group">
+                                                <label for="measuerment-value">Measuerment</label>
+                                                <input class="form-control" name="measurement-value" type="number" step="0.01" required/>
+                                            </div>
+                                            <div class="col-auto float-right form-group mt-auto">
+                                                <input class="btn btn-secondary" type="submit" step="Save"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="row">
+                                        <div class="col">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Measurement</th>
+                                                        <th scope="col" class="text-right">Value</th>
+                                                        <th scope="col" class="text-right">Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($controller->getUserMeasurements($_SESSION['user_id']) as $measurement): ?>
+                                                        <tr>
+                                                            <td scope="col"><?=$measurements[$measurement['measurement_id']]['measurement_name'];?></td>
+                                                            <td scope="col" class="text-right"><?=number_format($measurement['measurement_value'], 2);?></td>
+                                                            <td scope="col" class="text-right"><?=date('d/m/Y', strtotime($measurement['created']));?></td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

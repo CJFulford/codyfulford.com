@@ -1,3 +1,5 @@
+var supersetCounter = 1;
+
 function editMuscle(muscleId, muscleName)
 {
     $('form #muscle-id').val(muscleId);
@@ -68,6 +70,9 @@ function addSetToWorkout()
     $('#workout-sets').children('div').last().after(
         $('#workout-sets').children('div').last().clone()
     );
+    $('#workout-sets').children('div').last().find('input[type=checkbox]').attr('id', 'superset-'+supersetCounter);
+    $('#workout-sets').children('div').last().find('label').attr('for', 'superset-'+supersetCounter);
+    supersetCounter++;
 }
 
 function removeSetFromWorkout(removeButtonClicked)
@@ -86,7 +91,7 @@ function gatherWorkoutSets()
     {
         var set = {
             'exercise-id-numbers': [],
-            'superset': $(card).find('#superset').is(':checked')
+            'superset': $(card).find('input[type=checkbox]').is(':checked')
         };
         $(card).find('select').each(function (j, select)
         {
