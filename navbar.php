@@ -1,6 +1,4 @@
-<?php
-    include_once 'includes/includes.php';
-?>
+<?php include_once 'includes/includes.php'; ?>
 <nav class="navbar navbar-expand-md navbar-dark bg-black mb-3">
     <a class="navbar-brand" href="#">Cody Fulford</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +75,7 @@
             <?php if ($controller->isUserLoggedIn()) : ?>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="includes/api.php?function=logout">
-                        <i class="fas fa-sign-out-alt"></i> 
+                        <i class="fas fa-sign-out-alt"></i>
                         Logout
                     </a>
                 </li>

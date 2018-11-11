@@ -93,4 +93,33 @@ class controller
     {
         return $this->exerciseModel->saveExercise($exerciseName, $exerciseDescription, $relatedMuscles, $exerciseId);
     }
+
+    public function saveWorkout(string $workoutName, array $sets, bool $isAllUserWorkout) : bool
+    {
+        $success = false;
+        // create workout
+        $workoutId = $this->exerciseModel->saveWorkout($workoutName, $isAllUserWorkout);
+        if (is_numeric($workoutId))
+        {
+            $success = true;
+            // for each set
+            foreach ($sets as $set)
+            {
+                $setId = $this->exerciseModel->saveSet($set['superset']);
+                // link each exercise to the set
+                foreach($set['exercise-id-numbers'] as $exerciseId)
+                    if ($success)
+                        $success = $this->exerciseModel->createSetExerciseLink($setId, $exerciseId);
+                // link the set to the workout
+                if ($success)
+                    $success = $this->exerciseModel->createWorkoutSetLink($workoutId, $setId);
+            }
+        }
+        return $success;
+    }
+
+    public function getWorkouts() : array
+    {
+        return $this->exerciseModel->getWorkouts();
+    }
 }

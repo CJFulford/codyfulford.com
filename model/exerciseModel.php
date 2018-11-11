@@ -139,14 +139,32 @@ class exerciseModel
     public function getMuscles() : array
     {
         $muscles = [];
-        $query = $this->mysqli->prepare('SELECT id, muscle_name FROM exercise__muscles ORDER BY muscle_name ASC');
+        $query = $this->mysqli->prepare(
+            'SELECT
+                exercise__muscles.id,
+                exercise__muscles.muscle_name,
+                exercises.exercise_id
+            FROM exercise__muscles
+                LEFT JOIN (SELECT
+                        exercise__match_exercise_muscle.id,
+                        exercise_id,
+                        muscle_id
+                    FROM exercise__match_exercise_muscle, exercise__exercises
+                    WHERE exercise__match_exercise_muscle.exercise_id = exercise__exercises.id
+                    ORDER BY exercise__exercises.exercise_name) as exercises
+                ON exercise__muscles.id = exercises.muscle_id
+            ORDER BY muscle_name ASC');
         if($query)
         {
             $query->execute();
-            $query->bind_result($id, $muscleName);
+            $query->bind_result($id, $muscleName, $exerciseId);
             $query->store_result();
             while ($query->fetch())
-                $muscles[$id] = $muscleName;
+            {
+                $muscles[$id]['name'] = $muscleName;
+                if (is_numeric($exerciseId))
+                    $muscles[$id]['exercise_id_numbers'][] = $exerciseId;
+            }
             $query->close();
         }
         return $muscles;
@@ -165,5 +183,120 @@ class exerciseModel
             $query->close();
         }
         return $success;
+    }
+
+    public function saveWorkout(string $workoutName, bool $isAllUserWorkout) : int
+    {
+        $workoutId = null;
+        $query = $this->mysqli->prepare('INSERT INTO exercise__workouts (user_id, workout_name) VALUES (?,?)');
+        if ($query)
+        {
+            $userId = !$isAllUserWorkout ? $_SESSION['user_id'] : null;
+            $query->bind_param('is', $userId, $workoutName);
+            $query->execute();
+            $workoutId = $query->insert_id;
+            $query->close();
+        }
+        return $workoutId;
+    }
+
+    public function saveSet(bool $isSuperSet) : int
+    {
+        $setId = null;
+        $query = $this->mysqli->prepare('INSERT INTO exercise__sets (is_superset) VALUES (?)');
+        if ($query)
+        {
+            $query->bind_param('i', $isSuperSet);
+            $query->execute();
+            $setId = $query->insert_id;
+            $query->close();
+        }
+        return $setId;
+    }
+
+    public function createWorkoutSetLink(int $workoutId, int $setId) : bool
+    {
+        $success = false;
+        $query = $this->mysqli->prepare('INSERT INTO exercise__match_workout_set (workout_id, set_id) VALUES (?,?)');
+        if($query)
+        {
+            $query->bind_param('ii', $workoutId, $setId);
+            $query->execute();
+            if (!$query->error)
+                $success = true;
+            $query->close();
+        }
+        return $success;
+    }
+
+    public function createSetExerciseLink(int $setId, int $exerciseId) : bool
+    {
+        $success = false;
+        $query = $this->mysqli->prepare('INSERT INTO exercise__match_set_exercise (set_id, exercise_id) VALUES (?,?)');
+        if($query)
+        {
+            $query->bind_param('ii', $setId, $exerciseId);
+            $query->execute();
+            if (!$query->error)
+                $success = true;
+            $query->close();
+        }
+        return $success;
+    }
+
+    public function getWorkouts() : array
+    {
+        $workouts = [];
+        $query = $this->mysqli->prepare(
+            'SELECT
+                w.id, w.user_id, w.workout_name,
+                s.id, s.is_superset,
+                mse.exercise_id
+            FROM
+                exercise__workouts as w,
+                exercise__sets as s,
+                exercise__match_workout_set as mws,
+                exercise__match_set_exercise as mse
+            WHERE
+                # user is related to the user or the user id is null and therefore is an all user workout
+                (w.user_id = ? || w.user_id IS NULL) &&
+                # link the workouts and sets
+                w.id = mws.workout_id && mws.set_id = s.id &&
+                # link the sets and their exercises
+                s.id = mse.set_id
+            ORDER BY
+                w.id DESC,
+                s.id ASC,
+                mse.exercise_id ASC
+            ');
+        if ($query)
+        {
+            $query->bind_param('i', $_SESSION['user_id']);
+            $query->execute();
+            if ($query->error)
+                print_r($query);
+            else
+            {
+                $query->bind_result($workoutId, $workoutUser, $workoutName, $setId, $isSuperSet, $exerciseId);
+                $query->store_result();
+                while($query->fetch())
+                {
+                    $workouts[$workoutId]['name'] = $workoutName;
+                    $workouts[$workoutId]['is_default_workout'] = is_null($workoutUser);
+                    $workouts[$workoutId]['sets'][$setId]['is_superset'] = boolval($isSuperSet);
+                    $workouts[$workoutId]['sets'][$setId]['exercise_id_numbers'][] = $exerciseId;
+                }
+            }
+            $query->close();
+
+            foreach ($workouts as $workout)
+            {
+                $workout['sets'] = array_values($workout['sets']);
+            }
+        }
+        else
+            echo $this->mysqli->error;
+
+        return $workouts;
     }
 }

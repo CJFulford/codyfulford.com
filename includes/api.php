@@ -48,6 +48,10 @@
                 $message = !$controller->saveExercise($_POST['exercise-name'], $_POST['exercise-description'], json_decode($_POST['related-muscles'], true), $exerciseId) ? 'Save Failed' : '';
                 $gets[] = 'exercise-tabs=exercise-tab';
                 break;
+            case ('saveWorkout'):
+                $messsage = !$controller->saveWorkout($_POST['workout-name'], json_decode($_POST['sets'], true), intval($_SESSION['user_id']) === 1 && isset($_POST['all-user-workout'])) ? 'Save Failed' : '';
+                $gets[] = 'exercise-tabs=workouts-tab';
+                break;
             default:
                 break;
         }

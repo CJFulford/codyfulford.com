@@ -30,6 +30,7 @@ function editExercise(exerciseId, exerciseName, exerciseDescription, exerciseRel
     {
         $('#exercise-muscles').children('div').eq(i).find('select').val(exerciseRelatedMuscleIds[i]);
         addMuscleToExercise();
+        console.log(exerciseRelatedMuscleIds[i]);
     }
     $('#cancel-exercise-edit-button').removeClass('d-none');
 }
@@ -53,4 +54,47 @@ function gatherExerciseMuscles()
             muscleIds.push(parseInt($(select).val()));
     });
     $('form #related-muscles').val(JSON.stringify(muscleIds));
+}
+
+function addExerciseToSet(addButtonClicked)
+{
+    $(addButtonClicked).parentsUntil('.card').last().children('.exercise-select').last().after(
+        $(addButtonClicked).parentsUntil('.card').last().children('.exercise-select').last().clone()
+    );
+}
+
+function addSetToWorkout()
+{
+    $('#workout-sets').children('div').last().after(
+        $('#workout-sets').children('div').last().clone()
+    );
+}
+
+function removeSetFromWorkout(removeButtonClicked)
+{
+    // do not remove the last set
+    if ($('#workout-sets').children('div').length > 1)
+        $(removeButtonClicked).parentsUntil('.card-columns').last().remove();
+    else
+        alert('Cannot remove last set.');
+}
+
+function gatherWorkoutSets()
+{
+    var sets = [];
+    $('#workout-sets .card').each(function (i, card)
+    {
+        var set = {
+            'exercise-id-numbers': [],
+            'superset': $(card).find('#superset').is(':checked')
+        };
+        $(card).find('select').each(function (j, select)
+        {
+            if ($(select).val() != '')
+            set['exercise-id-numbers'].push($(select).val());
+        });
+        sets.push(set);
+    });
+    $('#workout-form #sets').val(JSON.stringify(sets));
+    return true;
 }
