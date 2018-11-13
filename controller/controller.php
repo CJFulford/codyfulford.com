@@ -137,4 +137,9 @@ class controller
     {
         return $this->exerciseModel->getUserMeasurements($userId);
     }
+
+    public function getWorkout(int $workoutId) : array
+    {
+        return $this->exerciseModel->getWorkout($workoutId);
+    }
 }

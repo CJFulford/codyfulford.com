@@ -346,4 +346,60 @@ class exerciseModel
         }
         return $measuerments;
     }
+
+    public function getWorkout(int $workoutId) : array
+    {
+        $workout = [];
+
+        $query = $this->mysqli->prepare(
+            'SELECT
+                w.workout_name, w.created,
+                s.id, s.is_superset,
+                mse.exercise_id
+            FROM
+                exercise__workouts as w,
+                exercise__sets as s,
+                exercise__match_workout_set as mws,
+                exercise__match_set_exercise as mse
+            WHERE
+                # link the requested workout id
+                w.id = ? &&
+                # user is related to the user or the user id is null and therefore is an all user workout
+                (w.user_id = ? || w.user_id IS NULL) &&
+                # link the workouts and sets
+                w.id = mws.workout_id && mws.set_id = s.id &&
+                # link the sets and their exercises
+                s.id = mse.set_id
+            ORDER BY
+                w.id DESC,
+                s.id ASC,
+                mse.exercise_id ASC
+            ');
+        if ($query)
+        {
+            $query->bind_param('ii', $workoutId, $_SESSION['user_id']);
+            $query->execute();
+            if ($query->error)
+                print_r($query);
+            else
+            {
+                $query->bind_result($workoutName, $created, $setId, $isSuperSet, $exerciseId);
+                $query->store_result();
+                while($query->fetch())
+                {
+                    $workout['name'] = $workoutName;
+                    $workout['created'] = $created;
+                    $workout['sets'][$setId]['is_superset'] = boolval($isSuperSet);
+                    $workout['sets'][$setId]['exercise_id_numbers'][] = $exerciseId;
+                }
+            }
+            $query->close();
+
+            $workout['sets'] = array_values($workout['sets']);
+        }
+        else
+            echo $this->mysqli->error;
+
+        return $workout;
+    }
 }

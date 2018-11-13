@@ -170,6 +170,11 @@
                                             <?php endforeach; ?>
                                         </div>
                                     </div>
+                                    <div class="card-footer clearfix">
+                                        <a class="btn btn-secondary btn-sm float-right" href="workout.php?workout-id=<?=$workoutId;?>">
+                                            Start Workout
+                                        </a>
+                                    </div>
                                 </div>
                                 <?php $workoutCounter--; ?>
                             <?php endforeach; ?>

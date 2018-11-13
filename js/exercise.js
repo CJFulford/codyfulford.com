@@ -1,5 +1,14 @@
 var supersetCounter = 1;
 
+$(document).ready(function ()
+{
+    // trigger the keyup event on page load to initialize each set with the edfault number of rounds
+    $('.set-round-count').each(function (index, setRoundsInput)
+    {
+        changeNumberOfSets(index, setRoundsInput);
+    });
+});
+
 function editMuscle(muscleId, muscleName)
 {
     $('form #muscle-id').val(muscleId);
@@ -32,7 +41,6 @@ function editExercise(exerciseId, exerciseName, exerciseDescription, exerciseRel
     {
         $('#exercise-muscles').children('div').eq(i).find('select').val(exerciseRelatedMuscleIds[i]);
         addMuscleToExercise();
-        console.log(exerciseRelatedMuscleIds[i]);
     }
     $('#cancel-exercise-edit-button').removeClass('d-none');
 }
@@ -102,4 +110,58 @@ function gatherWorkoutSets()
     });
     $('#workout-form #sets').val(JSON.stringify(sets));
     return true;
+}
+
+function changeNumberOfSets(setIndex, input)
+{
+    var previousRounds = $(input).data()['currentSetRounds'];
+    var newRounds = $(input).val();
+    // if newRounds is blank, then we assume that the user is going to enter a new numer of rounds and therefore we do nothing in anticipation of that.
+    // if the user wants to do 0 rounds, they should enter 0
+    if (newRounds != '')
+    {
+        while ($('.card:eq('+setIndex+') .card-body').children().first().find('.set-round:not(:first)').length != newRounds)
+        {
+            // adding a round
+            if (previousRounds < newRounds)
+            {
+                $('.card:eq('+setIndex+') .card-body').children().each(function (rowIndex, exerciseRow)
+                {
+                    $(exerciseRow).find('.set-round').last().after($(exerciseRow).find('.set-round').last().clone(true));
+                });
+            }
+            // removing a round
+            else if (newRounds < previousRounds)
+            {
+                $('.card:eq('+setIndex+') .card-body').children().each(function (rowIndex, exerciseRow)
+                {
+                    $(exerciseRow).find('.set-round').last().remove();
+                });
+            }
+
+            // reset the currentSetRounds data value to the now changed number
+            $(input).data()['currentSetRounds'] = $('.card:eq('+setIndex+') .card-body').children().first().find('.set-round:not(:first)').length;
+        }
+
+        // show all set-rounds, but not the first
+        $('.card:eq('+setIndex+') .card-body').children().each(function (rowIndex, exerciseRow)
+        {
+            $(exerciseRow).find('.set-round:not(:first)').removeClass('d-none');
+        });
+
+        // rename all inputs so that each is unique
+        $('.card').each(function (setIndex, setCard)
+        {
+            $(setCard).find('.card-body').children().each(function (exerciseIndex, exerciseRow)
+            {
+                $(exerciseRow).find('.set-round:not(:first)').each(function (setRoundIndex, setRound)
+                {
+                    $(setRound).find('input').each(function (inputIndex, input)
+                    {
+                        $(input)[0].name = 'workout['+setIndex+']['+exerciseIndex+']['+setRoundIndex+']['+$(input).data()['name']+']';
+                    });
+                });
+            });
+        });
+    }
 }

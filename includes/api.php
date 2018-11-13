@@ -5,6 +5,7 @@
     $loginNotRequired = [
         "login"
     ];
+
     if (!in_array($_REQUEST['function'], $loginNotRequired) && !$controller->isUserLoggedIn())
         unset($_REQUEST['function']);
 
@@ -56,6 +57,11 @@
                 $message = !$controller->saveMeasurement($_POST['measurement-id'], $_POST['measurement-value']) ? 'Save Failed' : '';
                 $gets[] = 'exercise-tabs=measurements-tab';
                 break;
+            case ('completeWorkout'):
+            echo '<pre>';
+                print_r($_POST);
+                echo '</pre>';
+                return;
             default:
                 break;
         }
