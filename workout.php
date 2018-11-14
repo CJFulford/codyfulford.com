@@ -1,10 +1,15 @@
 <?php
     include_once 'includes/includes.php';
 
-    if (!$controller->isUserLoggedIn())
-        header('Location: index.php');
+    if (isset($_GET['redirect-page']))
+        header('Location: ../'.$_GET['redirect-page']);
 
-    //$workout = $controller->getWorkout($workoutId);
+    if (!$controller->isUserLoggedIn())
+        header('Location: ./');
+
+    $workoutId = is_numeric($_GET['workout-id']) ? $_GET['workout-id'] : null;
+
+    $workout = is_numeric($workoutId) ? $controller->getWorkout($workoutId) : [];
 
     $userDetails = $controller->getUserDetails($_SESSION['user_id']);
     $exercises = $controller->getExercises();
@@ -20,17 +25,13 @@
         <?php include "navbar.php"; ?>
 
         <div class="container">
-            <div class="row">
-                <div class="col">
+            <div class="clearfix">
+                    <small class="float-right">
+                        Created: <?=date('d/m/Y', strtotime($workout['created']));?>
+                    </small>
                     <h1>
                         <?=$workout['name'];?>
                     </h1>
-                </div>
-                <div class="col-auto">
-                    <small>
-                        Created: <?=date('d/m/Y', strtotime($workout['created']));?>
-                    </small>
-                </div>
             </div>
             <div class="row">
                 <div class="col">

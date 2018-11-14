@@ -7,7 +7,8 @@ RewriteRule ^doodles$ doodles.php
 RewriteRule ^login$ login.php
 RewriteRule ^user$ user-settings.php
 RewriteRule ^workout$ workout.php
-RewriteRule ^workout/(.*)$ workout.php?workout-id=$1
+RewriteRule ^workout/([0-9]+)$ workout.php?workout-id=$1
+RewriteRule ^workout/([a-zA-Z]+)$ workout.php?redirect-page=$1
 RewriteRule ^templates$ templates.php
 RewriteRule ^exercises$ exercises.php
 RewriteRule ^muscles$ muscles.php

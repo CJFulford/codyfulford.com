@@ -118,7 +118,7 @@
                                 </div>
                             </div>
                             <div class="card-footer clearfix">
-                                <a class="btn btn-secondary btn-sm float-right" href="workout.php?workout-id=<?=$workoutId;?>">
+                                <a class="btn btn-secondary btn-sm float-right" href="workout/<?=$workoutId;?>">
                                     Start Workout
                                 </a>
                             </div>
