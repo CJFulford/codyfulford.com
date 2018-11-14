@@ -4,11 +4,7 @@
     if (!$controller->isUserLoggedIn())
         header('Location: index.php');
 
-    $workoutId = $_GET['workout-id'];
-    if (!is_numeric($workoutId))
-        header('Location: exercise.php');
-
-    $workout = $controller->getWorkout($workoutId);
+    //$workout = $controller->getWorkout($workoutId);
 
     $userDetails = $controller->getUserDetails($_SESSION['user_id']);
     $exercises = $controller->getExercises();
