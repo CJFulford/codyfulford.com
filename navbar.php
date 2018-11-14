@@ -7,48 +7,65 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" id="navbar-index">
-                <a class="nav-link text-white" href="index.php">
+                <a class="nav-link text-white" href="./">
                     <i class="fas fa-home"></i>
                     Home
                 </a>
             </li>
             <li class="nav-item" id="navbar-career">
-                <a class="nav-link text-white" href="career.php">
+                <a class="nav-link text-white" href="career">
                     <i class="fas fa-building"></i>
                     Career
                 </a>
             </li>
             <li class="nav-item" id="navbar-volunteering">
-                <a class="nav-link text-white" href="volunteering.php">
+                <a class="nav-link text-white" href="volunteering">
                     <i class="fas fa-hands-helping"></i>
                     Volunteering
                 </a>
             </li>
             <li class="nav-item" id="navbar-development">
-                <a class="nav-link text-white" href="development.php">
+                <a class="nav-link text-white" href="development">
                     <i class="fas fa-dumbbell"></i>
                     code
                 </a>
             </li>
             <li class="nav-item" id="navbar-doodles">
-                <a class="nav-link text-white" href="doodles.php">
+                <a class="nav-link text-white" href="doodles">
                     <i class="fas fa-dragon"></i>
                     Doodles
                 </a>
             </li>
             <?php if ($controller->isUserLoggedIn()) : ?>
-                <li class="nav-item" id="navbar-exercise">
-                    <a class="nav-link text-white" href="exercise.php">
+                <li class="nav-item dropdown" id="navbar-exercise">
+                    <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-dumbbell"></i>
-                        Exercise
+                        Fitness
                     </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="workout">
+                            Workout
+                        </a>
+                        <a class="dropdown-item" href="templates">
+                            Templates
+                        </a>
+                        <a class="dropdown-item" href="exercises">
+                            Exercises
+                        </a>
+                        <a class="dropdown-item" href="muscles">
+                            Muscles
+                        </a>
+                        <a class="dropdown-item" href="measurements">
+                            Measurements
+                        </a>
+                    </div>
                 </li>
             <?php endif; ?>
         </ul>
         <ul class="navbar-nav ml-auto">
             <?php if ($controller->isUserLoggedIn()) : ?>
                 <li class="nav-item" id="navbar-user-settings">
-                    <a class="nav-link text-white" href="user-settings.php">
+                    <a class="nav-link text-white" href="user">
                         <i class="fas fa-user"></i>
                         User Settings
                     </a>
@@ -81,7 +98,7 @@
                 </li>
             <?php else: ?>
                 <li class="nav-item" id="navbar-login">
-                    <a class="nav-link text-white" href="login.php">
+                    <a class="nav-link text-white" href="login">
                         <i class="fas fa-sign-in-alt"></i>
                         Login
                     </a>

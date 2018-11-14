@@ -180,15 +180,19 @@ class exerciseModel
             $query->execute();
             if (!$query->error)
                 $success = true;
+            else
+                echo $query->error;
             $query->close();
         }
+        else
+            echo $this->mysqli->error;
         return $success;
     }
 
     public function saveWorkout(string $workoutName, bool $isAllUserWorkout) : int
     {
         $workoutId = null;
-        $query = $this->mysqli->prepare('INSERT INTO exercise__workouts (user_id, workout_name) VALUES (?,?)');
+        $query = $this->mysqli->prepare('INSERT INTO exercise__workout_templates (user_id, workout_name) VALUES (?,?)');
         if ($query)
         {
             $userId = !$isAllUserWorkout ? $_SESSION['user_id'] : null;
@@ -253,7 +257,7 @@ class exerciseModel
                 s.id, s.is_superset,
                 mse.exercise_id
             FROM
-                exercise__workouts as w,
+                exercise__workout_templates as w,
                 exercise__sets as s,
                 exercise__match_workout_set as mws,
                 exercise__match_set_exercise as mse
@@ -357,7 +361,7 @@ class exerciseModel
                 s.id, s.is_superset,
                 mse.exercise_id
             FROM
-                exercise__workouts as w,
+                exercise__workout_templates as w,
                 exercise__sets as s,
                 exercise__match_workout_set as mws,
                 exercise__match_set_exercise as mse

@@ -2,7 +2,7 @@
     include_once 'includes/includes.php';
 
     if (!$controller->isUserLoggedIn())
-        header('Location: index.php');
+        header('Location: ./');
 
     $userDetails = $controller->getUserDetails($_SESSION['user_id']);
 ?>
