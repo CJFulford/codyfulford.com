@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-12">
                     <div class="card-columns">
-                        <div class="card border-dark">
+                        <div class="card">
                             <div class="card-header">
                                 Personal Settings
                             </div>
@@ -48,7 +48,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="card border-dark">
+                        <div class="card">
                             <div class="card-header">
                                 Change Password
                             </div>

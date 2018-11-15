@@ -44,10 +44,10 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="workout">
-                            Workout
+                            New Workout
                         </a>
-                        <a class="dropdown-item" href="templates">
-                            Templates
+                        <a class="dropdown-item" href="workouts">
+                            Past Workouts
                         </a>
                         <a class="dropdown-item" href="exercises">
                             Exercises

@@ -340,12 +340,20 @@ class exerciseModel
     public function getUserMeasurements(int $userId) : array
     {
         $measuremeents = [];
-        $query = $this->mysqli->prepare('SELECT * FROM exercise__match_user_measurement WHERE user_id = ? ORDER BY id DESC');
+        $query = $this->mysqli->prepare('SELECT id, measurement_id, measurement_value, created FROM exercise__match_user_measurement WHERE user_id = ? ORDER BY id DESC');
         if ($query)
         {
             $query->bind_param('i', $userId);
             $query->execute();
-            $measuerments = $query->get_result()->fetch_all(MYSQLI_ASSOC);
+            $query->bind_result($id, $measurementId, $measurementValue, $created);
+            $query->store_result();
+            while($query->fetch())
+            {
+                $measuerments[$measurementId][] = [
+                    'measurement_value'=> $measurementValue,
+                    'created' => $created
+                ];
+            }
             $query->close();
         }
         return $measuerments;
