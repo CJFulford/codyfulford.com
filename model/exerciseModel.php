@@ -367,4 +367,65 @@ class exerciseModel
             }
         return $workouts;
     }
+
+    public function getUserWorkout(int $workoutId) : array
+    {
+        $workout = [];
+        $query = $this->mysqli->prepare(
+            'SELECT
+                w.date,
+                w.start_time,
+                w.finish_time,
+                s.id,
+                s.is_superset,
+                s.lap_count,
+                e.id,
+                e.exercise_id,
+                e.weight,
+                e.repetitions
+            FROM
+                exercise__user_workouts as w,
+                exercise__user_workout_sets as s,
+                exercise__user_workout_set_exercises as e
+            WHERE
+                # link the workout and its sets
+                w.id = s.user_workout_id &&
+                # link the sets and their exercises
+                s.id = e.user_workout_set_id &&
+                # get only the workouts for this user
+                w.id = ?
+            ORDER BY
+                s.id ASC,
+                e.id ASC
+            ');
+            if ($query)
+            {
+                $query->bind_param('i', $workoutId);
+                $query->execute();
+                $query->bind_result($date, $startTime, $finishTime, $userWorkoutSetId, $isSuperset, $lapCount, $userWorkoutSetExerciseId, $exerciseId, $weight, $repetitions);
+                $query->store_result();
+                while($query->fetch())
+                {
+                    $workout['date'] = $date;
+                    $workout['start_time'] = $startTime;
+                    $workout['finish_time'] = $finishTime;
+                    $workout['sets'][$userWorkoutSetId]['user_workout_set_id'] = $userWorkoutSetId;
+                    $workout['sets'][$userWorkoutSetId]['is_superset'] = boolval($isSuperset);
+                    $workout['sets'][$userWorkoutSetId]['lap_count'] = $lapCount;
+                    $workout['sets'][$userWorkoutSetId]['exercise_id_numbers'][] = $exerciseId;
+                    $workout['sets'][$userWorkoutSetId]['exercises'][$userWorkoutSetExerciseId]['user_workout_set_exercise_id'] = $userWorkoutSetExerciseId;
+                    $workout['sets'][$userWorkoutSetId]['exercises'][$userWorkoutSetExerciseId]['weight'] = $weight;
+                    $workout['sets'][$userWorkoutSetId]['exercises'][$userWorkoutSetExerciseId]['repetitions'] = $repetitions;
+                }
+                $query->close();
+
+                foreach ($workout['sets'] as $userWorkoutSetId => $setDetails)
+                {
+                    $workout['sets'][$userWorkoutSetId]['exercises'] = array_values($workout['sets'][$userWorkoutSetId]['exercises']);
+                    $workout['sets'][$userWorkoutSetId]['exercise_id_numbers'] = array_values(array_unique($workout['sets'][$userWorkoutSetId]['exercise_id_numbers']));
+                }
+                $workout['sets'] = array_values($workout['sets']);
+            }
+        return $workout;
+    }
 }

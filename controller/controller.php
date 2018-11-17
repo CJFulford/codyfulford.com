@@ -113,7 +113,7 @@ class controller
     {
         $success = false;
         // create the workout.
-        $userWorkoutId = 0;//$this->exerciseModel->createUserWorkout($date, $startTime, $endTime);
+        $userWorkoutId = $this->exerciseModel->createUserWorkout($date, $startTime, $endTime);
         // if the workout was created successfully...
         if ($userWorkoutId !== -1)
         {
@@ -141,6 +141,8 @@ class controller
                                 if ($continue && is_numeric($exercise['weight'][$i]) && is_numeric($exercise['repetitions'][$i]))
                                 {
                                     $success = $this->exerciseModel->createUserWorkoutSetExercise($userWorkoutSetId, $exerciseId, $exercise['weight'][$i], $exercise['repetitions'][$i]);
+                                    if (!$success)
+                                        $continue = false;
                                 }
                                 else
                                     $continue = false;
@@ -160,5 +162,10 @@ class controller
     public function getUserWorkouts() : array
     {
         return $this->exerciseModel->getUserWorkouts();
+    }
+
+    public function getUserWorkout(int $workoutId) : array
+    {
+        return $this->exerciseModel->getUserWorkout($workoutId);
     }
 }

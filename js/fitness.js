@@ -6,6 +6,8 @@ $(document).ready(function ()
     $('input.set-lap-count').keyup();
 
     enableSlidingCards();
+
+    loadWorkout();
 });
 
 function enableSlidingCards()
@@ -153,7 +155,7 @@ function changeNumberOfSetLaps(input)
 
         $(card).find('.card-body').children().each(function (exerciseIndex, exerciseRow)
         {
-            $(exerciseRow).find('input, select').each(function (inputIndex, input)
+            $(exerciseRow).find('.set-lap:not(.d-none) input, select').each(function (inputIndex, input)
             {
                 var uniqueText = 'workout['+setIndex+'][exercises]['+exerciseIndex+']['+$(input).data()['name']+'][]';
 
@@ -161,11 +163,9 @@ function changeNumberOfSetLaps(input)
                 {
                     $(input).attr('id', uniqueText);
                     $(input).siblings('label').attr('for', uniqueText);
-                    $(input).attr('name', uniqueText);
                 }
 
-                if ($(input).is(':visible'))
-                    $(input).attr('name', uniqueText);
+                $(input).attr('name', uniqueText);
             });
         });
     }
@@ -185,10 +185,14 @@ function addExerciseToSet(addButtonClicked)
 function addSetToWorkout()
 {
     // duplicate the last set card
-    $('body form .card:last').after($('body form .card').last().clone(false));
+    $('body form .card:last').after($('body form .card').last().clone(true));
 
     // clear all inputs on the new set
     $('body form .card:last .card-body input').val('');
+
+    // set superset to false
+    if ($('body form .card:last .superset-input').is(':checked'))
+        $('body form .card:last .superset-input').click();
 
     // set the set lap count to 1
     $('body form .card:last .card-header .set-lap-count').val(1);
@@ -207,4 +211,52 @@ function addSetToWorkout()
     });
 
     enableSlidingCards();
+}
+
+function loadWorkout()
+{
+    if ($('#loaded-workout-details').length > 0)
+    {
+        // load the workout details from the encoded json string in the html
+        var workout = JSON.parse(decodeURIComponent($('#loaded-workout-details').html()));
+
+        // go over each set.
+        $(workout.sets).each(function (setIndex, set)
+        {
+            // add enough sets to thw workout page
+            // we skip index 0 because teh page loads by default with a set
+            if (setIndex > 0)
+                $('#add-workout-set-button').click();
+
+            // click the superset box if appropriate
+            if (set.is_superset)
+                $('.card:last .superset-input').click();
+
+            // fill in the lap count input
+            $('.card:last .set-lap-count').val(set.lap_count).trigger('keyup');
+
+            //add on as many exercises as needed
+            for (var i = 0; i < set.exercise_id_numbers.length - 1; i++)
+                $('.card:last .add-set-exercise-button').click();
+
+            // populate the exercise selects
+            $('.card:last .card-body select').each(function (index, select) { $(select).val(set.exercise_id_numbers[index]); });
+
+            // populate the weight values
+            $('.card:last .card-body .set-lap:not(.d-none) input[data-name=weight]').each(function (index, input)
+            {
+                $(input).attr('placeholder', 'Weight ('+set.exercises[index]['weight'].toFixed(1)+')');
+                $(input).val(set.exercises[index]['weight'].toFixed(1));
+            });
+            // populate the repetition values
+            $('.card:last .card-body .set-lap:not(.d-none) input[data-name=repetitions]').each(function (index, input)
+            {
+                $(input).attr('placeholder', 'Repetitions ('+set.exercises[index]['repetitions']+')');
+                $(input).val(set.exercises[index]['repetitions']);
+            });
+
+            // refresh the set laps and all input ids and names
+            //changeNumberOfSetLaps($('.card:last .card-header .set-lap-count'));
+        });
+    }
 }

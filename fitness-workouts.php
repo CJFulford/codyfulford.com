@@ -67,9 +67,9 @@
                                     <?php endforeach; ?>
                                 </div>
                                 <div class="card-footer clearfix">
-                                    <button class="btn btn-secondary float-right">
+                                    <a class="btn btn-secondary float-right" href="workout/<?=$workoutDetails['user_workout_id'];?>">
                                         Load Workout
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         <?php endforeach; ?>

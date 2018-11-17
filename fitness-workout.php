@@ -7,6 +7,8 @@
     if (!$controller->isUserLoggedIn())
         header('Location: ./');
 
+    $workoutId = is_numeric($_GET['workout-id']) ? $_GET['workout-id'] : null;
+
     $userDetails = $controller->getUserDetails($_SESSION['user_id']);
     $exercises = $controller->getExercises();
     $muscles = $controller->getMuscles();
@@ -20,12 +22,18 @@
     <body>
         <?php include "navbar.php"; ?>
 
+        <?php if (!is_null($workoutId)): ?>
+            <div class="d-none" id="loaded-workout-details">
+                <?=rawurlencode(json_encode($controller->getUserWorkout($workoutId)));?>
+            </div>
+        <?php endif; ?>
+
         <div class="container">
             <h1 class="text-center border-bottom border-red border-2">
                 Workout
             </h1>
 
-            <form method="post" action="includes/api.php">
+            <form method="post" action="/codyfulford.com/includes/api.php">
                 <input type="hidden" name="function" value="completeUserWorkout" />
                 <input type="hidden" name="start-time" />
                 <input type="hidden" name="end-time" />
@@ -37,7 +45,7 @@
                             </div>
                             <div class="col-auto my-auto superset stopToggle">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input superset-input">
+                                    <input type="checkbox" class="custom-control-input superset-input" />
                                     <label class="custom-control-label">
                                         SUPERSET
                                     </label>
@@ -77,7 +85,7 @@
                         </div>
                     </div>
                     <div class="card-footer clearfix">
-                        <div class="btn btn-secondary float-right" onclick="addExerciseToSet(this)">
+                        <div class="btn btn-secondary float-right add-set-exercise-button" onclick="addExerciseToSet(this)">
                             Add Exercise To Set
                         </div>
                     </div>
@@ -85,7 +93,7 @@
                 <div class="row mt-3">
                     <div class="col"></div>
                     <div class="col-auto">
-                        <div class="btn btn-secondary" onclick="addSetToWorkout();" >
+                        <div class="btn btn-secondary" onclick="addSetToWorkout();" id="add-workout-set-button">
                             Add Set To Workout
                         </div>
                     </div>
@@ -110,7 +118,7 @@
                             <label for="end-time">
                                 Time Finished
                             </label>
-                            <input type="time" class="form-control" name="end-time" value="<?=date('H:i', strtotime('+1 hour'));?>"/>
+                            <input type="time" class="form-control" name="finish-time" value="<?=date('H:i', strtotime('+1 hour'));?>"/>
                         </div>
                     <div>
                 </div>
