@@ -13,12 +13,12 @@ class databaseModel
         }
     }
 
-    public function getDatabaseConnection() : mysqli
+    public function getDatabaseConnection()
     {
         return $this->mysqli;
     }
 
-    public function getSexes() : array
+    public function getSexes()
     {
         $sexes = [];
         $query = $this->mysqli->prepare('SELECT id, sex_name FROM sexes');

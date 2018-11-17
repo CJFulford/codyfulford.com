@@ -1,23 +1,22 @@
 <?php
-function auto_version_file(string $file) : string
+function auto_version_file($file)
 {
-    $siteName = '/codyfulford.com';
-    return strpos($file, '/') !== 0 || !file_exists($_SERVER['DOCUMENT_ROOT'].$siteName.$file)
+    return strpos($file, '/') !== 0 || !file_exists($_SERVER['DOCUMENT_ROOT'].$file)
             ?   $file
             :   $siteName.preg_replace('{\\.([^./]+)$}', ".".filemtime($_SERVER['DOCUMENT_ROOT'].$siteName . $file).".\$1", $file);
 }
 
-function getDaysBetweenDates(string $firstDate, string $secondDate) : int
+function getDaysBetweenDates($firstDate, $secondDate)
 {
     return round((strtotime($firstDate) - strtotime($secondDate)) / (60 * 60 * 24));
 }
 
-function formatDate(string $date) : string
+function formatDate($date)
 {
     return date('D, M jS, Y', strtotime($date));
 }
 
-function formatTime(string $time) : string
+function formatTime($time)
 {
     return date('g:i A', strtotime($time));
 }

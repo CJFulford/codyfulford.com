@@ -1,3 +1,7 @@
+<?php
+if(session_status()!=PHP_SESSION_ACTIVE)
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -88,7 +92,7 @@
                     <p class="text-justify">My first job was in the retail department at Heritage Park Historical Village in Calgary, Alberta, Canada at the age of 14. My brother started his career here two years prior and I was eager to follow his success. I quickly learned the ropes of a working environment and was quite happy working here throughout the standard summer operating months and fall/winter holidays. I soon learned the pressure that comes with working in a retail position and with it came an appreciation for those that work in these positions full-time. The roles that I was assigned to were largely unsupervised, working individually or in small teams.</p>
                     <ul>
                         <li>Quick mental calculations</li>
-                        
+
                         <li>Individual and small team retail</li>
                         <li>Little supervision</li>
                     </ul>

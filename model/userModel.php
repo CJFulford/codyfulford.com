@@ -3,12 +3,12 @@ class userModel
 {
     private $mysqli = null;
 
-    public function __construct(mysqli $databaseConnection)
+    public function __construct($databaseConnection)
     {
         $this->mysqli = $databaseConnection;
     }
-        
-    public function login(string $email, string $password) : bool
+
+    public function login($email, $password)
     {
         $success = false;
 
@@ -27,11 +27,8 @@ class userModel
             $query->close();
         }
 
-        echo $numberOfUsersFound;
-
         if (intval($numberOfUsersFound) === 1)
         {
-            echo $storedHash;
             // we were able to retrieve the user from teh database and the entered password matches, user has logged in
             if (password_verify($password, $storedHash))
             {
@@ -41,12 +38,10 @@ class userModel
             }
         }
 
-        var_dump($success);
-
         return $success;
     }
 
-    public function logout() : bool
+    public function logout()
     {
         $params = session_get_cookie_params();
         // Delete the actual cookie.
@@ -55,7 +50,7 @@ class userModel
         return true;
     }
 
-    public function isUserLoggedIn() : bool
+    public function isUserLoggedIn()
     {
         $isUserLoggedIn = false;
 
@@ -80,7 +75,7 @@ class userModel
         }
         return $isUserLoggedIn;
     }
-    public function getUserDetails(int $userId) : array
+    public function getUserDetails($userId)
     {
         $userDetails = [];
         $query = $this->mysqli->prepare('SELECT first_name, last_name, birth_date, sex_id, email FROM users WHERE id = ?');
@@ -88,13 +83,22 @@ class userModel
         {
             $query->bind_param('i', $userId);
             $query->execute();
-            $userDetails = $query->get_result()->fetch_assoc();
+            if (!$query->error)
+            {
+                $query->bind_result($userDetails['first_name'], $userDetails['last_name'], $userDetails['birth_date'], $userDetails['sex_id'], $userDetails['email']);
+                $query->store_result();
+                $query->fetch();
+            }
+            else
+                echo $query->error;
             $query->close();
         }
+        else
+            echo $this->mysqli->error;
         return $userDetails;
     }
 
-    public function saveUserDetails(string $firstName, string $lastName, string $email) : bool
+    public function saveUserDetails($firstName, $lastName, $email)
     {
         echo 'asdf';
         $success = false;
@@ -110,7 +114,7 @@ class userModel
         return $success;
     }
 
-    public function changeUserPassword(string $password0, string $password1, string $password2) : bool
+    public function changeUserPassword($password0, $password1, $password2)
     {
         $success = false;
 
@@ -120,7 +124,9 @@ class userModel
         {
             $query->bind_param('i', $_SESSION['user_id']);
             $query->execute();
-            $storedHash = $query->get_result()->fetch_array()[0];
+            $query->bind_result($storedHash);
+            $query->store_reuslt();
+            $query->fetch();
         }
 
         $query = $this->mysqli->prepare('UPDATE users SET hash = ? WHERE id = ?');

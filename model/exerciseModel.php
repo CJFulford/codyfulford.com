@@ -8,7 +8,7 @@ class exerciseModel
         $this->mysqli = $databaseConnection;
     }
 
-    public function getExerciseDetails(int $exerciseId) :array
+    public function getExerciseDetails($exerciseId)
     {
         $exercise = [];
         $query = $this->mysqli->prepare(
@@ -50,7 +50,7 @@ class exerciseModel
         return $exercise;
     }
 
-    public function getExercises() : array
+    public function getExercises()
     {
         $exercises = [];
         $query = $this->mysqli->prepare(
@@ -87,7 +87,7 @@ class exerciseModel
         return $exercises;
     }
 
-    public function saveExercise(string $exerciseName, string $exerciseDescription, array $relatedMuscles, int $exerciseId = null) : bool
+    public function saveExercise($exerciseName, $exerciseDescription, $relatedMuscles, $exerciseId)
     {
         $success = false;
         $query = $this->mysqli->prepare('INSERT INTO exercise__exercises (id, exercise_name, exercise_description) VALUES (?,?,?) ON DUPLICATE KEY UPDATE exercise_name = ?, exercise_description = ?');
@@ -136,7 +136,7 @@ class exerciseModel
         return $success;
     }
 
-    public function getMuscles() : array
+    public function getMuscles()
     {
         $muscles = [];
         $query = $this->mysqli->prepare(
@@ -170,7 +170,7 @@ class exerciseModel
         return $muscles;
     }
 
-    public function saveMuscle(string $muscleName, int $muscleId = null) : bool
+    public function saveMuscle($muscleName, $muscleId)
     {
         $successs = false;
         $query = $this->mysqli->prepare('INSERT INTO exercise__muscles (id, muscle_name) VALUES (?,?) ON DUPLICATE KEY UPDATE muscle_name = ?');
@@ -189,22 +189,29 @@ class exerciseModel
         return $success;
     }
 
-    public function getMeasurements() : array
+    public function getMeasurements()
     {
         $measurements = [];
-        $query = $this->mysqli->prepare('SELECT * FROM exercise__measurements');
+        $query = $this->mysqli->prepare('SELECT id, measurement_name FROM exercise__measurements');
         if ($query)
         {
             $query->execute();
-            $results = $query->get_result();
-            while($row = $results->fetch_assoc())
-                $measurements[$row['id']] = $row;
+            if (!$query->error)
+            {
+                $query->bind_result($id, $measurementName);
+                $query->store_result();
+                while($query->fetch)
+                {
+                    $measuerments[$id]['id'] = $id;
+                    $measuerments[$id]['measurement_name'] = $measurementName;
+                }
+            }
             $query->close();
         }
         return $measurements;
     }
 
-    public function saveMeasurement(int $measurementId, float $measurementValue) : bool
+    public function saveMeasurement($measurementId, $measurementValue)
     {
         $success = false;
         $query = $this->mysqli->prepare('INSERT INTO exercise__match_user_measurement (user_id, measurement_id, measurement_value) VALUES (?,?,?)');
@@ -221,9 +228,9 @@ class exerciseModel
         return $success;
     }
 
-    public function getUserMeasurements(int $userId) : array
+    public function getUserMeasurements($userId)
     {
-        $measuremeents = [];
+        $measuerments = [];
         $query = $this->mysqli->prepare('SELECT id, measurement_id, measurement_value, created FROM exercise__match_user_measurement WHERE user_id = ? ORDER BY id DESC');
         if ($query)
         {
@@ -243,7 +250,7 @@ class exerciseModel
         return $measuerments;
     }
 
-    public function createUserWorkout(string $date, string $startTime, string $endTime) : int
+    public function createUserWorkout($date, $startTime, $endTime)
     {
         $userWorkoutId = -1;
         $query = $this->mysqli->prepare('INSERT INTO exercise__user_workouts (user_id, date, start_time, finish_time) VALUES (?,?,?,?)');
@@ -262,7 +269,7 @@ class exerciseModel
         return $userWorkoutId;
     }
 
-    public function createUserWorkoutSet(int $userWorkoutId, bool $isSuperset, int $lapCount) : int
+    public function createUserWorkoutSet($userWorkoutId, $isSuperset, $lapCount)
     {
         $userSetId = -1;
         $query = $this->mysqli->prepare('INSERT INTO exercise__user_workout_sets (user_workout_id, is_superset, lap_count) VALUES (?,?,?)');
@@ -281,7 +288,7 @@ class exerciseModel
         return $userSetId;
     }
 
-    public function createUserWorkoutSetExercise(int $userWorkoutSetId, int $exerciseId, float $weight, int $repetitions) : bool
+    public function createUserWorkoutSetExercise($userWorkoutSetId, $exerciseId, $weight, $repetitions)
     {
         $success = false;
         $query = $this->mysqli->prepare('INSERT INTO exercise__user_workout_set_exercises (user_workout_set_id, exercise_id, weight, repetitions) VALUES (?,?,?,?)');
@@ -300,7 +307,7 @@ class exerciseModel
         return $success;
     }
 
-    public function getUserWorkouts() : array
+    public function getUserWorkouts()
     {
         $workouts = [];
         $query = $this->mysqli->prepare(
@@ -368,7 +375,7 @@ class exerciseModel
         return $workouts;
     }
 
-    public function getUserWorkout(int $workoutId) : array
+    public function getUserWorkout($workoutId)
     {
         $workout = [];
         $query = $this->mysqli->prepare(

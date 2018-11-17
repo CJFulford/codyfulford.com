@@ -5,6 +5,7 @@
         header('Location: ./');
 
     $userDetails = $controller->getUserDetails($_SESSION['user_id']);
+    $userMeasurements = $controller->getUserMeasurements($_SESSION['user_id']);
     $measurements = $controller->getMeasurements();
 ?>
 <!DOCTYPE html>
@@ -48,7 +49,7 @@
                     </div>
                     <hr />
                     <div class="card-columns">
-                        <?php foreach ($controller->getUserMeasurements($_SESSION['user_id']) as $measurementId => $userMeasurements): ?>
+                        <?php foreach ($userMeasurements as $measurementId => $userMeasurements): ?>
                             <div class="card">
                                 <div class="card-header bg-dark text-white">
                                     <?=$measurements[$measurementId]['measurement_name'];?>
