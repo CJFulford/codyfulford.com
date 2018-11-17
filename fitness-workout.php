@@ -26,8 +26,9 @@
             </h1>
 
             <form method="post" action="includes/api.php">
-                <input type="hidden" name="function" value="completeWorkout" />
-                <input type="hidden" id="workout-id" name="workout-id" value="<?=$_GET['workout-id'];?>" />
+                <input type="hidden" name="function" value="completeUserWorkout" />
+                <input type="hidden" name="start-time" />
+                <input type="hidden" name="end-time" />
                 <div class="card mb-1 border-dark">
                     <div class="card-header bg-dark text-white py-1">
                         <div class="row text-center">
@@ -89,14 +90,40 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row mt-5">
                     <div class="col"></div>
-                    <div class="col-auto">
+                    <div class="col-12 col-md-auto">
+                        <div class="form-group">
+                            <label for="date">
+                                Date
+                            </label>
+                            <input type="date" class="form-control" name="date" value="<?=date('Y-m-d');?>"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="start-time">
+                                Time Started
+                            </label>
+                            <input type="time" class="form-control" name="start-time" value="<?=date('H:i');?>"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="end-time">
+                                Time Finished
+                            </label>
+                            <input type="time" class="form-control" name="end-time" value="<?=date('H:i', strtotime('+1 hour'));?>"/>
+                        </div>
+                    <div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col"></div>
+                    <div class="col-auto form-group">
                         <input class="btn btn-secondary" type="submit" value="Finish Workout"/>
-                    </div>
+                    <div>
                 </div>
             </form>
         </div>
+
         <?php include 'global-footer.php'; ?>
         <script src="<?=auto_version_file('/js/fitness.js');?>"></script>
         <script>$(document).ready(function () { $('#navbar-exercise').addClass('active rounded'); });</script>

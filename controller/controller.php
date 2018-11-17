@@ -94,35 +94,6 @@ class controller
         return $this->exerciseModel->saveExercise($exerciseName, $exerciseDescription, $relatedMuscles, $exerciseId);
     }
 
-    public function saveWorkout(string $workoutName, array $sets, bool $isAllUserWorkout) : bool
-    {
-        $success = false;
-        // create workout
-        $workoutId = $this->exerciseModel->saveWorkout($workoutName, $isAllUserWorkout);
-        if (is_numeric($workoutId))
-        {
-            $success = true;
-            // for each set
-            foreach ($sets as $set)
-            {
-                $setId = $this->exerciseModel->saveSet($set['superset']);
-                // link each exercise to the set
-                foreach($set['exercise-id-numbers'] as $exerciseId)
-                    if ($success)
-                        $success = $this->exerciseModel->createSetExerciseLink($setId, $exerciseId);
-                // link the set to the workout
-                if ($success)
-                    $success = $this->exerciseModel->createWorkoutSetLink($workoutId, $setId);
-            }
-        }
-        return $success;
-    }
-
-    public function getWorkouts() : array
-    {
-        return $this->exerciseModel->getWorkouts();
-    }
-
     public function getMeasurements() : array
     {
         return $this->exerciseModel->getMeasurements();
@@ -138,8 +109,56 @@ class controller
         return $this->exerciseModel->getUserMeasurements($userId);
     }
 
-    public function getWorkout(int $workoutId) : array
+    public function completeUserWorkout(array $workout, string $date, string $startTime, string $endTime) : bool
     {
-        return $this->exerciseModel->getWorkout($workoutId);
+        $success = false;
+        // create the workout.
+        $userWorkoutId = 0;//$this->exerciseModel->createUserWorkout($date, $startTime, $endTime);
+        // if the workout was created successfully...
+        if ($userWorkoutId !== -1)
+        {
+            $continue = true;
+            // go over each set.
+            foreach ($workout as $setIndex => $set)
+            {
+                // create the set.
+                $userWorkoutSetId = $this->exerciseModel->createUserWorkoutSet($userWorkoutId, isset($set['is-superset']), $set['lap-count']);
+                // if the set was created successfully...
+                if ($continue && $userWorkoutSetId !== -1)
+                {
+                    // go over each exercise.
+                    foreach ($set['exercises'] as $exerciseIndex => $exercise)
+                    {
+                        // extract the exercise ID from the workout array
+                        $exerciseId = $exercise['exercise-id'][0];
+                        // if theexercise was set by the user...
+                        if ($continue && is_numeric($exerciseId))
+                        {
+                            // go over each lap of the exericse.
+                            for ($i = 0; $i < count($exercise['repetitions']); $i++)
+                            {
+                                // confirm that we are still goo
+                                if ($continue && is_numeric($exercise['weight'][$i]) && is_numeric($exercise['repetitions'][$i]))
+                                {
+                                    $success = $this->exerciseModel->createUserWorkoutSetExercise($userWorkoutSetId, $exerciseId, $exercise['weight'][$i], $exercise['repetitions'][$i]);
+                                }
+                                else
+                                    $continue = false;
+                            }
+                        }
+                        else
+                            $continue = false;
+                    }
+                }
+                else
+                    $continue = false;
+            }
+        }
+        return $success;
+    }
+
+    public function getUserWorkouts() : array
+    {
+        return $this->exerciseModel->getUserWorkouts();
     }
 }

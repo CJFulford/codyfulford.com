@@ -10,6 +10,7 @@
 
     $message = '';
     $gets = '';
+    $redirect = $_SERVER['HTTP_REFERER'];
     if (isset($_REQUEST['function']))
     {
         switch($_REQUEST['function'])
@@ -52,11 +53,10 @@
             case ('saveMeasurement'):
                 $message = !$controller->saveMeasurement($_POST['measurement-id'], $_POST['measurement-value']) ? 'Save Failed' : '';
                 break;
-            case ('completeWorkout'):
-            echo '<pre>';
-                print_r($_POST);
-                echo '</pre>';
-                return;
+            case ('completeUserWorkout'):
+                $message = !$controller->completeUserWorkout($_POST['workout'], $_POST['date'], $_POST['start-time'], $_POST['end-time']) ? 'Save Failed' : '';
+                $redirect = '../workouts';
+                break;
             default:
                 break;
         }
@@ -68,6 +68,6 @@
         }
 
         // send user back to the page they were on
-        header("Location: ".$_SERVER['HTTP_REFERER']);
+        header("Location: ".$redirect);
     }
 ?>

@@ -4,11 +4,8 @@
     if (!$controller->isUserLoggedIn())
         header('Location: index.php');
 
-    $userDetails = $controller->getUserDetails($_SESSION['user_id']);
-    $workouts = $controller->getWorkouts();
+    $userWorkouts = $controller->getUserWorkouts();
     $exercises = $controller->getExercises();
-    $muscles = $controller->getMuscles();
-    $measurements = $controller->getMeasurements();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,40 +22,54 @@
                         Previous Workouts
                     </h1>
                     <div class="card-columns">
-                        <?php foreach($workouts as $workoutId => $workout): ?>
+                        <?php foreach($userWorkouts as $workoutIndex => $workoutDetails): ?>
                             <div class="card my-2">
                                 <div class="card-header bg-dark text-white clearfix">
                                     <small class="float-right">
-                                        <?=formatDate($workout['created']);?>
+                                        <?=formattime($workoutDetails['start_time']);?>
+                                        -
+                                        <?=formattime($workoutDetails['finish_time']);?>
                                     </small>
-                                    <?=$workout['name'];?>
+                                    <?=formatDate($workoutDetails['date']);?>
                                 </div>
                                 <div class="card-body py-1">
-                                    <div class="row">
-                                        <?php $setIndex = 0; ?>
-                                        <?php foreach ($workout['sets'] as $setId => $set): ?>
-                                            <div class="col-12 py-1 my-0 <?=($setIndex > 0 ? 'border-top border-dark' : '');?>">
-                                                <?php if ($set['is_superset']): ?>
-                                                    <div class="text-center">
-                                                        <small>
-                                                            Superset
-                                                        </small>
-                                                    </div>
-                                                <?php endif; ?>
-                                                <?php foreach ($set['exercise_id_numbers'] as $exerciseId): ?>
-                                                    <p class="text-truncate mb-0">
-                                                        <?=$exercises[$exerciseId]['name'];?>
-                                                    </p>
-                                                <?php endforeach; ?>
+                                    <?php $isFirstSet = true; ?>
+                                    <?php foreach ($workoutDetails['sets'] as $setIndex => $setDetails): ?>
+                                        <div class="row">
+                                            <div class="col-12 text-center text-uppercase <?=($setDetails['is_superset'] ? 'bg-warning' : 'bg-dark text-white');?>">
+                                                <small>
+                                                    <?=($setDetails['is_superset'] ? 'SUPERSET' : 'SET');?>
+                                                </small>
                                             </div>
-                                            <?php $setIndex++; ?>
-                                        <?php endforeach; ?>
-                                    </div>
+                                            <div class="col-12">
+                                            <?php foreach ($setDetails['exercise_id_numbers'] as $exerciseSetIndex => $exerciseId): ?>
+                                                <div class="row <?=($exerciseSetIndex > 0 ? 'border-top border-dark' : '')?>">
+                                                    <div class="col my-auto">
+                                                        <?=$exercises[$exerciseId]['name'];?>
+                                                    </div>
+                                                    <div class="col">
+                                                        <?php for ($i = 0; $i < $setDetails['lap_count']; $i++): ?>
+                                                            <div class="row">
+                                                                <div class="col text-truncate text-right">
+                                                                    <?=number_format($setDetails['exercises'][$exerciseSetIndex * $setDetails['lap_count'] + $i]['weight'], 1);?>
+                                                                </div>
+                                                                <div class="col text-truncate text-right">
+                                                                    <?=number_format($setDetails['exercises'][$exerciseSetIndex * $setDetails['lap_count'] + $i]['repetitions']);?>
+                                                                </div>
+                                                            </div>
+                                                        <?php endfor; ?>
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; ?>
+                                            </div>
+                                        </div>
+                                        <?php $isFirstSet = false; ?>
+                                    <?php endforeach; ?>
                                 </div>
                                 <div class="card-footer clearfix">
-                                    <a class="btn btn-secondary btn-sm float-right" href="workout/<?=$workoutId;?>">
-                                        Start Workout
-                                    </a>
+                                    <button class="btn btn-secondary float-right">
+                                        Load Workout
+                                    </button>
                                 </div>
                             </div>
                         <?php endforeach; ?>

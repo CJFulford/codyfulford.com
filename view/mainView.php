@@ -16,3 +16,8 @@ function formatDate(string $date) : string
 {
     return date('D, M jS, Y', strtotime($date));
 }
+
+function formatTime(string $time) : string
+{
+    return date('g:i A', strtotime($time));
+}

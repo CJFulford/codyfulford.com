@@ -145,6 +145,8 @@ function changeNumberOfSetLaps(input)
         var setIndex = $(card).index('.card');
 
         var supersetUniqueText = 'workout['+setIndex+'][is-superset]';
+        var lapCountUniqueText = 'workout['+setIndex+'][lap-count]';
+        $(card).find('.set-lap-count').attr('name', lapCountUniqueText);
         $(card).find('.superset-input').attr('name', supersetUniqueText);
         $(card).find('.superset-input').attr('id', supersetUniqueText);
         $(card).find('.superset-input').siblings('label').attr('for', supersetUniqueText);
@@ -153,7 +155,7 @@ function changeNumberOfSetLaps(input)
         {
             $(exerciseRow).find('input, select').each(function (inputIndex, input)
             {
-                var uniqueText = 'workout['+setIndex+']['+exerciseIndex+']['+$(input).data()['name']+'][]';
+                var uniqueText = 'workout['+setIndex+'][exercises]['+exerciseIndex+']['+$(input).data()['name']+'][]';
 
                 if ($(input).is(':checkbox'))
                 {
