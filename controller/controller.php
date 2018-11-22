@@ -1,9 +1,10 @@
 <?php
 if( session_status()!=PHP_SESSION_ACTIVE)
     session_start();
-include_once 'model/databaseModel.php';
-include_once 'model/userModel.php';
-include_once 'model/exerciseModel.php';
+
+include_once __DIR__.'/../model/databaseModel.php';
+include_once __DIR__.'/../model/userModel.php';
+include_once __DIR__.'/../model/exerciseModel.php';
 
 class controller
 {

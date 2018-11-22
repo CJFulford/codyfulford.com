@@ -1,6 +1,5 @@
 <?php
-if(session_status()!=PHP_SESSION_ACTIVE)
-    session_start();
+    include_once ("includes/includes.php")
 ?>
 <!DOCTYPE html>
 <html lang="en">

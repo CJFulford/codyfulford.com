@@ -10,7 +10,6 @@ if(session_status()!=PHP_SESSION_ACTIVE)
     </head>
     <body>
         <?php include "navbar.php"; ?>
-
         <div class="container">
             <div class="row border mb-2 quote-area">
                 <div class="col">

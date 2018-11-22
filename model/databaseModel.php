@@ -5,7 +5,7 @@ class databaseModel
 
     public function __construct()
     {
-        require_once('databaseCredentials.php');
+        require_once('/var/www/databaseCredentials.php');
         $this->mysqli = new mysqli(HOSTNAME, USERNAME, PASSWORD, DATABASE);
         // Check connection
         if ($this->mysqli->connect_error) {

@@ -200,14 +200,18 @@ class exerciseModel
             {
                 $query->bind_result($id, $measurementName);
                 $query->store_result();
-                while($query->fetch)
+                while($query->fetch())
                 {
-                    $measuerments[$id]['id'] = $id;
-                    $measuerments[$id]['measurement_name'] = $measurementName;
+                    $measurements[$id]['id'] = $id;
+                    $measurements[$id]['measurement_name'] = $measurementName;
                 }
             }
+            else
+                echo $query->error;
             $query->close();
         }
+        else
+            echo $this->mysqli->error;
         return $measurements;
     }
 

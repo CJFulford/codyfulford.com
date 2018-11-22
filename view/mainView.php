@@ -1,6 +1,7 @@
 <?php
 function auto_version_file($file)
 {
+    return $file;
     return strpos($file, '/') !== 0 || !file_exists($_SERVER['DOCUMENT_ROOT'].$file)
             ?   $file
             :   $siteName.preg_replace('{\\.([^./]+)$}', ".".filemtime($_SERVER['DOCUMENT_ROOT'].$siteName . $file).".\$1", $file);
