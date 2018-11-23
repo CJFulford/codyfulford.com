@@ -6,15 +6,4 @@ RewriteRule ^career$ career.php
 RewriteRule ^development$ development.php
 RewriteRule ^volunteering$ volunteering.php
 RewriteRule ^doodles$ doodles.php
-RewriteRule ^login$ login.php
-RewriteRule ^user$ user-settings.php
-RewriteRule ^workout$ fitness-workout.php
-RewriteRule ^workout/old/([0-9]+)$ fitness-workout.php?workout-id=$1
-RewriteRule ^workout/([0-9]+)$ fitness-workout.php?workout-id=$1
-RewriteRule ^workout/([a-zA-Z]+)$ fitness-workout.php?redirect-page=$1
-RewriteRule ^workouts$ fitness-workouts.php
-RewriteRule ^exercises$ fitness-exercises.php
-RewriteRule ^muscles$ fitness-muscles.php
-RewriteRule ^measurements$ fitness-measurements.php
-RewriteRule ^(.*)\.[\d]{10}\.(css|js)$ $1.$2 [L]
 Options -Indexes
