@@ -8,27 +8,27 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" id="navbar-index">
-                <a class="nav-link text-white" href="./">
+                <a class="nav-link text-white" href="/">
                     Home
                 </a>
             </li>
             <li class="nav-item" id="navbar-career">
-                <a class="nav-link text-white" href="career">
+                <a class="nav-link text-white" href="/career">
                     Career
                 </a>
             </li>
             <li class="nav-item" id="navbar-volunteering">
-                <a class="nav-link text-white" href="volunteering">
+                <a class="nav-link text-white" href="/volunteering">
                     Volunteering
                 </a>
             </li>
             <li class="nav-item" id="navbar-development">
-                <a class="nav-link text-white" href="development">
+                <a class="nav-link text-white" href="/development">
                     code
                 </a>
             </li>
             <li class="nav-item" id="navbar-doodles">
-                <a class="nav-link text-white" href="doodles">
+                <a class="nav-link text-white" href="/doodles">
                     Doodles
                 </a>
             </li>
