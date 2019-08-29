@@ -1,3 +1,7 @@
 body {
     padding-bottom: 2em;
 }
+
+nav.navbar .navbar-brand {
+    font-size: 2em;
+}
