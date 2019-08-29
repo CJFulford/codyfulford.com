@@ -2,68 +2,57 @@
     --red: #620d0d;
 }
 
-body
-{
+body {
     padding-bottom: 50px;
 }
 
 .navbar .active,
 .quote-area,
 .nav-link.active,
-.bg-red
-{
+.bg-red {
     background-color: var(--red)!important;
     color: #fff!important;
 }
 
-.border-red
-{
+.border-red {
     border-color: var(--red)!important;
 }
 
-.border-2
-{
+.border-2 {
     border-width: 2px !important;
 }
 
 .hover-pointer:hover,
-.custom-control-label
-{
+.custom-control-label {
     cursor: pointer;
 }
 
-.bg-black
-{
+.bg-black {
     background-color: #000 !important;
 }
 
-label
-{
+label {
     padding-left: 1rem;
 }
 
 .form-control,
-.card
-{
+.card {
     border-color: #000;
 }
 
-.form-group
-{
+.form-group {
     margin-top: 0.375rem;
     margin-bottom: 0.375rem;
 }
 
-.form-group label
-{
+.form-group label {
     margin-top: 0.375rem;
     margin-bottom: 0rem;
 }
 
 .card-body,
 .card-footer,
-.btn
-{
+.btn {
     padding-top: .25rem!important;
     padding-bottom: .25rem!important;
 }
