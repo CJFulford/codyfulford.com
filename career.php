@@ -8,7 +8,7 @@
         <title>Cody Fulford - Work Experience</title>
     </head>
     <body>
-        <?php include "navbar.php"; ?>
+        <?php include "navbar.html"; ?>
 
         <div class="container">
 

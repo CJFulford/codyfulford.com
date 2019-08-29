@@ -5,7 +5,7 @@
         <title>Cody Fulford - Volunteering</title>
     </head>
     <body>
-        <?php include "navbar.php"; ?>
+        <?php include "navbar.html"; ?>
         <div class="container">
             <!--Stampede-->
             <div class="row">

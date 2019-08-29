@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <?php include "navbar.php"; ?>
+    <?php include "navbar.html"; ?>
 
     <div class="container">
         <div class="row text-justify">
