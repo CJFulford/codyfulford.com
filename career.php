@@ -1,6 +1,3 @@
-<?php
-    include_once ("includes/includes.php")
-?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
