@@ -1,17 +1,12 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
-    <div class="navbar-brand">
+    <a class="navbar-brand" href="/" >
         Cody Fulford
-    </div>
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item" id="navbar-index">
-                <a class="nav-link text-white" href="/">
-                    Home
-                </a>
-            </li>
             <li class="nav-item" id="navbar-career">
                 <a class="nav-link text-white" href="/career">
                     Career
