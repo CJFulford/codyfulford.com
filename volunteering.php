@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <?php include 'global-header.php'; ?>
+        <?php include 'global-header.html'; ?>
         <title>Cody Fulford - Volunteering</title>
     </head>
     <body>
