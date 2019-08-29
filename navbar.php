@@ -7,31 +7,26 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" id="navbar-index">
                 <a class="nav-link text-white" href="./">
-                    <i class="fas fa-home"></i>
                     Home
                 </a>
             </li>
             <li class="nav-item" id="navbar-career">
                 <a class="nav-link text-white" href="career">
-                    <i class="fas fa-building"></i>
                     Career
                 </a>
             </li>
             <li class="nav-item" id="navbar-volunteering">
                 <a class="nav-link text-white" href="volunteering">
-                    <i class="fas fa-hands-helping"></i>
                     Volunteering
                 </a>
             </li>
             <li class="nav-item" id="navbar-development">
                 <a class="nav-link text-white" href="development">
-                    <i class="fas fa-dumbbell"></i>
                     code
                 </a>
             </li>
             <li class="nav-item" id="navbar-doodles">
                 <a class="nav-link text-white" href="doodles">
-                    <i class="fas fa-dragon"></i>
                     Doodles
                 </a>
             </li>
