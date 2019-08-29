@@ -7,14 +7,6 @@
     <body>
         <?php include "navbar.php"; ?>
         <div class="container">
-            <div class="row border mb-2 quote-area">
-                <div class="col">
-                    <blockquote class="blockquote text-right text-white">
-                        <p class="mb-0">True leaders are not those who strive to be first, but those who are first to strive and who give their all for the success of the team.</p>
-                        <footer class="blockquote-footer text-light">Lancer Pride Award, 2010</footer>
-                    </blockquote>
-                </div>
-            </div>
             <div class="row text-justify">
                 <div class="col">
                     <p>My name is Cody Fulford.</p>
