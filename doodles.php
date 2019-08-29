@@ -33,7 +33,7 @@
                 <div class="col-12 text-center"><img class="border border-dark mw-100" src="media/portfolio/hall_of_mirrors.png"></div>
             </div>
         </div>
-        <?php include 'global-footer.php'; ?>
+        <?php include 'global-footer.html'; ?>
         <script>$(document).ready(function () { $('#navbar-doodles').addClass('active rounded'); });</script>
     </body>
 </html>

@@ -65,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <?php include 'global-footer.php'; ?>
+        <?php include 'global-footer.html'; ?>
         <script>$(document).ready(function () { $('#navbar-development').addClass('active rounded'); });</script>
     </body>
 </html>

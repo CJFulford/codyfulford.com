@@ -98,7 +98,7 @@
                 </div>
             </div>
         </div>
-        <?php include 'global-footer.php'; ?>
+        <?php include 'global-footer.html'; ?>
         <script>$(document).ready(function () { $('#navbar-career').addClass('active rounded'); });</script>
     </body>
 </html>

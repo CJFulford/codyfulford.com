@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <?php include 'global-footer.php'; ?>
+    <?php include 'global-footer.html'; ?>
     <script>
         $(document).ready(function() {
             $('#navbar-index').addClass('active rounded');
