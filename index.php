@@ -16,7 +16,6 @@
                 </div>
             </div>
             <div class="row text-justify">
-                <div class="col-12 col-md-3"><img class="w-100 border border-dark" src="media/Portrait.jpg"></div>
                 <div class="col">
                     <p>My name is Cody Fulford.</p>
                     <p>I currently live in Calgary, Alberta, Canada where I was born in 1994.</p>
