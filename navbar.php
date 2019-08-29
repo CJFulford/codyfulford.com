@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-black mb-3">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
     <div class="navbar-brand">
         Cody Fulford
     </div>
