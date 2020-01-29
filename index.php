@@ -10,9 +10,14 @@
     <?php include "navbar.html"; ?>
 
     <div class="container">
+        <p>
+            Hello.
+        </p>
+        <p class="main-greeting">
+            I am Cody Fulford.
+        </p>
         <div class="row text-justify">
             <div class="col">
-                <p>My name is Cody Fulford.</p>
                 <p>I currently live in Calgary, Alberta, Canada where I was born in 1994.</p>
 
                 <p>I am currently employed at Integrity Post Structures in Okotoks, Alberta, Canada where I work under Daniel Maher building an industry leading job management program.</p>

@@ -17,3 +17,10 @@ p
 .navbar .navbar-brand {
     font-size: 2em;
 }
+
+.main-greeting
+{
+    font-size: 4em;
+    font-weight: bold;
+    line-height: 1;
+}
