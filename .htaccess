@@ -8,5 +8,5 @@ RewriteRule ^$ index.php
 RewriteRule ^career$ career.php
 RewriteRule ^development$ development.php
 RewriteRule ^volunteering$ volunteering.php
-RewriteRule ^doodles$ doodles.php
+RewriteRule ^renderings$ renderings.php
 Options -Indexes
