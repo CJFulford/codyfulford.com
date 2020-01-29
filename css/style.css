@@ -3,11 +3,6 @@ body {
     font-size: 14pt;
 }
 
-p
-{
-    margin-bottom: 0.5rem;
-}
-
 .navbar
 {
     text-transform: capitalize;
