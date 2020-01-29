@@ -1,5 +1,11 @@
 RewriteEngine on
 
+
+# force http on production
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !^dev\.
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 # remove trailing slash
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [L,R=301]
