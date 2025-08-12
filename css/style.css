@@ -26,7 +26,7 @@ img {
     max-height: 25rem;
 }
 
-#external-links a {
+a.buttonLink {
     padding: 3px 5px;
     margin: 0 5px;
     color: #000;
@@ -38,7 +38,7 @@ img {
     background-color: #fff;
 }
 
-#external-links a:hover {
+a.buttonLink:hover {
     background-color: #ddd;
     text-decoration: none;
 }
