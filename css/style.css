@@ -5,7 +5,8 @@ body {
 .container {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
-
+    border-left: none;
+    border-right: none;
 }
 
 h1, h2, h3 {
