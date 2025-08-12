@@ -5,6 +5,7 @@ body {
 .container {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
+
 }
 
 h1, h2, h3 {
@@ -23,4 +24,21 @@ h1 {
 img {
     max-width: 100%;
     max-height: 25rem;
+}
+
+#external-links a {
+    padding: 3px 5px;
+    margin: 0 5px;
+    color: #000;
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+#external-links a:hover {
+    background-color: #ddd;
+    text-decoration: none;
 }
