@@ -27,7 +27,7 @@ img {
     max-height: 25rem;
 }
 
-a.buttonLink {
+.buttonLink {
     padding: 3px 5px;
     margin: 0 5px;
     color: #000;
@@ -39,7 +39,7 @@ a.buttonLink {
     background-color: #fff;
 }
 
-a.buttonLink:hover {
+.buttonLink:hover {
     background-color: #ddd;
     text-decoration: none;
 }
