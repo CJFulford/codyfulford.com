@@ -1,6 +1,6 @@
 <h1>Cody Fulford</h1>
 
-<div class="text-center mb-3">
+<div class="text-center my-3">
     <a href="https://www.linkedin.com/in/codyfulford/" class="btn btn-link">
         <i class="fab fa-linkedin"></i>
         Linkedin
@@ -12,22 +12,24 @@
 </div>
 
 <div class="text-center mb-3">
-    {% if page.name == 'index.html' %}
-    <a href="/" class="btn btn-secondary">Home</a>
-    {% else %}
-    <a href="/" class="btn btn-outline-secondary">Home</a>
-    {% endif %}
+    <div class="btn-group">
+        {% if page.name == 'index.html' %}
+        <a href="/" class="btn btn-secondary">Home</a>
+        {% else %}
+        <a href="/" class="btn btn-outline-secondary">Home</a>
+        {% endif %}
 
-    {% if page.name == 'career.html' %}
-    <a href="/career.html" class="btn btn-secondary">Career</a>
-    {% else %}
-    <a href="/career.html" class="btn btn-outline-secondary">Career</a>
-    {% endif %}
+        {% if page.name == 'career.html' %}
+        <a href="/career.html" class="btn btn-secondary">Career</a>
+        {% else %}
+        <a href="/career.html" class="btn btn-outline-secondary">Career</a>
+        {% endif %}
 
-    {% if page.name == 'volunteering.html' %}
-    <a href="/volunteering.html" class="btn btn-secondary">Volunteering</a>
-    {% else %}
-    <a href="/volunteering.html" class="btn btn-outline-secondary">Volunteering
-    </a>
-    {% endif %}
+        {% if page.name == 'volunteering.html' %}
+        <a href="/volunteering.html" class="btn btn-secondary">Volunteering</a>
+        {% else %}
+        <a href="/volunteering.html" class="btn btn-outline-secondary">Volunteering
+        </a>
+        {% endif %}
+    </div>
 </div>
