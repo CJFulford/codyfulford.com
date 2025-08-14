@@ -2,30 +2,21 @@
 layout: default
 ---
 
-<h3>Integrity Post Structures</h3>
-<p>Full Stack Development & IT - Current</p>
+{% for job in site.data.career %}
+
+<h3>{{ job.company }}</h3>
+
+{% for position in job.positions %}
+<p>{{ position.title }}: {{ position.duration }}</p>
 <ul>
-    <li>Full stack web development (HTML, CSS/Bootstrap, PHP, javascript/jQuery)</li>
-    <li>Database Design and Management (MySQL)</li>
-    <li>Model-View-Controller(MVC) Framework</li>
-    <li>Small team version control (Subversion)</li>
-    <li>General IT (Majority Windows 10 users)</li>
-    <li>Ubuntu Development Environment</li>
-    <li>GSuite Administrator Duties</li>
+    {% for duty in position.duties %}
+    <li>{{ duty }}</li>
+    {% endfor %}
 </ul>
+{% endfor %}
 
-<h3>iCube Development</h3>
-<p>Assistant Technician - 2015-2016</p>
-<ul>
-    <li>Data recovery using both software and hardware methods</li>
-    <li>IT services for contracted clients both on and off-site (over phone and remote desktop)</li>
-    <li>Required to keep exemplary work order notes for both clients and other technicians to review</li>
-    <li>Trusted to handle critical/confidential client data</li>
-    <li>Designed and constructed 3D printers</li>
-</ul>
+{% unless forloop.last %}
+<hr class="pb-3" />
+{%endunless %}
 
-<h5>Glencoe Golf & Country Club</h5>
-<p>Groundskeeper - 2013-2014</p>
-
-<h5>Heritage Park Historical Village</h5>
-<p>Retail - 2010-2012</p>
+{% endfor %}
