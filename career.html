@@ -4,10 +4,10 @@ layout: default
 
 {% for job in site.data.career %}
 
-<h3>{{ job.company }}</h3>
+<h2>{{ job.company }}</h2>
 
 {% for position in job.positions %}
-<p>{{ position.title }}: {{ position.duration }}</p>
+<h4>{{ position.title }}: {{ position.duration }}</h4>
 <ul>
     {% for duty in position.duties %}
     <li>{{ duty }}</li>
