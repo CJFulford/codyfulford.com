@@ -1,0 +1,29 @@
+<h1>Cody Fulford</h1>
+
+<div class="text-center my-3">
+    <a href="https://www.linkedin.com/in/codyfulford/" class="btn btn-link">
+        <i class="fab fa-linkedin"></i>
+        Linkedin
+    </a>
+    <a href="https://github.com/CJFulford" class="btn btn-link">
+        <i class="fab fa-github"></i>
+        Github
+    </a>
+</div>
+
+<div class="text-center mb-3">
+    <div class="btn-group">
+        {% for item in site.data.navigation %}
+        <a href="{{ item.link }}"
+           class="btn
+               {% if page.url == item.link %}
+               btn-secondary
+               {% else %}
+               btn-outline-secondary
+               {% endif %}"
+        >
+            {{ item.name }}
+        </a>
+        {% endfor %}
+    </div>
+</div>

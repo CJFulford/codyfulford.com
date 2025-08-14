@@ -1,0 +1,6 @@
+- name: Home
+  link: /
+- name: Career
+  link: /career.html
+- name: Volunteering
+  link: /volunteering.html

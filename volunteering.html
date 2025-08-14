@@ -1,0 +1,27 @@
+---
+layout: default
+---
+
+{% for org in site.data.volunteering %}
+
+<h2 class="underline text-center">
+    {{ org.name }}
+</h2>
+
+
+{% for paragraph in org.description %}
+<p>{{ paragraph }}</p>
+{% endfor %}
+
+<div class="text-center">
+    <img src="assets/images/{{ org.img.src }}"
+         alt="{{ org.img.alt }}"
+         class="rounded"
+    />
+</div>
+
+{% unless forloop.last %}
+<hr class="pb-3" />
+{%endunless %}
+
+{% endfor %}
