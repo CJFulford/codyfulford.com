@@ -1,0 +1,14 @@
+<h2 class="underline text-center">
+    {{ include.title }}
+</h2>
+{{ include.content }}
+<div class="text-center">
+    <img src="{{ include.img_src }}"
+         alt="{{ include.img_alt }}"
+         class="rounded"
+    />
+</div>
+
+{% if include.isLast == 0 %}
+<hr class="pb-3" />
+{% endif %}

@@ -16,11 +16,11 @@ h1, h2, h3 {
 
 h1, h2 {
     text-align: center;
-    border-bottom: black 1px solid;
 }
 
 h1 {
     font-size: 4rem;
+    border-bottom: black 1px solid;
 }
 
 h3 {
@@ -30,21 +30,4 @@ h3 {
 img {
     max-width: 100%;
     max-height: 25rem;
-}
-
-.buttonLink {
-    padding: 3px 5px;
-    margin: 0 5px;
-    color: #000;
-    font-size: 1.2rem;
-    text-align: center;
-    font-weight: bold;
-    border: 1px solid #000;
-    border-radius: 5px;
-    background-color: #fff;
-}
-
-.buttonLink:hover {
-    background-color: #ddd;
-    text-decoration: none;
 }
