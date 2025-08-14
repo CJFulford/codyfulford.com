@@ -13,23 +13,17 @@
 
 <div class="text-center mb-3">
     <div class="btn-group">
-        {% if page.name == 'index.html' %}
-        <a href="/" class="btn btn-secondary">Home</a>
-        {% else %}
-        <a href="/" class="btn btn-outline-secondary">Home</a>
-        {% endif %}
-
-        {% if page.name == 'career.html' %}
-        <a href="/career.html" class="btn btn-secondary">Career</a>
-        {% else %}
-        <a href="/career.html" class="btn btn-outline-secondary">Career</a>
-        {% endif %}
-
-        {% if page.name == 'volunteering.html' %}
-        <a href="/volunteering.html" class="btn btn-secondary">Volunteering</a>
-        {% else %}
-        <a href="/volunteering.html" class="btn btn-outline-secondary">Volunteering
+        {% for item in site.data.navigation %}
+        <a href="{{ item.link }}"
+           class="btn
+               {% if page.url == item.link %}
+               btn-secondary
+               {% else %}
+               btn-outline-secondary
+               {% endif %}"
+        >
+            {{ item.name }}
         </a>
-        {% endif %}
+        {% endfor %}
     </div>
 </div>
